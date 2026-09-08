@@ -44,7 +44,7 @@ export async function login(req, res) {
         const token = createToken({ username:user.username, _id: user._id,role:user.role })
         res.cookie('token', token, {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: 'none'
         });
         res.json({
