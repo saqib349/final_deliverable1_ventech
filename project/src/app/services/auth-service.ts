@@ -12,7 +12,7 @@ export class AuthService {
 
     checkAuth() {
         return this.http.get<{data:User}>(
-            'http://localhost:8000/auth/me'
+            'https://final-deliverable1-ventech-o7q6.vercel.app/auth/me'
         ).pipe(
             tap((result) => {
                 this.isAuthenticated.set(true);
@@ -28,16 +28,16 @@ export class AuthService {
 
     logoutUser() {
         console.log("hello in the logoutUser")
-        return this.http.post("http://localhost:8000/user/logout", {}).pipe(
+        return this.http.post("https://final-deliverable1-ventech-o7q6.vercel.app/user/logout", {}).pipe(
             tap(() => {
                 this.isAuthenticated.set(false);
             })
         )
     }
     signupUser(user: Omit<User, "role">) {
-        return this.http.post<{ data: User }>("http://localhost:8000/user/signup", user)
+        return this.http.post<{ data: User }>("https://final-deliverable1-ventech-o7q6.vercel.app/user/signup", user)
     }
     loginUser(user: Omit<User, "username" | "role">) {
-        return this.http.post<{ data: User }>("http://localhost:8000/user/login", user)
+        return this.http.post<{ data: User }>("https://final-deliverable1-ventech-o7q6.vercel.app/user/login", user)
     }
 } 

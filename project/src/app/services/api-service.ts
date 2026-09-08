@@ -9,18 +9,18 @@ export class ApiService {
     http = inject(HttpClient)
 
     getTodos() {
-        return this.http.get<{data: todo[]}>("http://localhost:8000/todo")
+        return this.http.get<{data: todo[]}>("https://final-deliverable1-ventech-o7q6.vercel.app/todo")
     }
 
     addTodo(todo:createTodo) {
-        return this.http.post<{data:todo}>("http://localhost:8000/todo",todo)
+        return this.http.post<{data:todo}>("https://final-deliverable1-ventech-o7q6.vercel.app/todo",todo)
     }
 
     deleteTodo(id:string){
-        return this.http.delete<{data:todo}>(`http://localhost:8000/todo/${id}`)
+        return this.http.delete<{data:todo}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/${id}`)
     }
     updateTodo(id:string,todo:todo){
-        return this.http.patch<{data:todo}>(`http://localhost:8000/todo/${id}`,todo)
+        return this.http.patch<{data:todo}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/${id}`,todo)
     }
     
 }
