@@ -10,7 +10,7 @@ import userRouter from './routes/user.router.js'
 
 const app = express()
 app.use(cors({
-    origin:process.env.FRONTEND_UR|| "http://localhost:4200",
+    origin:process.env.FRONTEND_URL|| "http://localhost:4200",
      credentials: true
 }));
 app.use(express.json())
