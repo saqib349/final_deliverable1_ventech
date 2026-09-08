@@ -32,13 +32,7 @@ app.use("/admin/user",authMiddleware,authorizationMiddleWare,userRouter)
 // })  
 
 
-const serverStarted= async ()=>{
-    await connectDB()
-    app.listen(process.env.PORT,()=>{
-        console.log(`server started at ${process.env.PORT}`)
-    })
-}
-
-serverStarted();
+await connectDB()
+export default app;
 
 
