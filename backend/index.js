@@ -6,7 +6,8 @@ import authRouter from './routes/auth.router.js'
 import { authMiddleware, authorizationMiddleWare } from './middlewares/auth.middleware.js'
 import cookieParser from 'cookie-parser'
 import userRouter from './routes/user.router.js'
-
+import dotenv from "dotenv"
+dotenv.config()
 
 const app = express()
 app.use(cors({
