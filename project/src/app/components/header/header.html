@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+  <div class="container-fluid">
+
+    <a class="navbar-brand fw-semibold" routerLink="/">
+      Angular
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <!-- Main navigation -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active">
+            Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/apiTodo" routerLinkActive="active">
+            API Todo
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/listTodo" routerLinkActive="active">
+            List Todo
+          </a>
+        </li>
+
+      </ul>
+
+      <!-- Right side -->
+      <div class="d-flex align-items-center gap-2">
+
+        <!-- Search -->
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 250px;"
+          (input)="searching($any($event.target).value)">
+
+        <!-- Login -->
+        @if(!isAuthenticated()){
+        <div class="d-flex align-items-center gap-1">
+          <a class="btn btn-outline-primary" routerLink="/login">
+            Login
+          </a>
+
+          <!-- Signup -->
+          <a class="btn btn-primary" routerLink="/signup">
+            Sign Up
+          </a>
+        </div>
+        }
+        @else {
+        <div class="d-flex align-items-center gap-3">
+
+          <!-- User profile -->
+          <div class="d-flex align-items-center gap-2">
+            <div class="user-avatar">
+              {{ username().charAt(0).toUpperCase() }}
+            </div>
+
+            <div class="user-info">
+              <small class="text-muted d-block">Welcome</small>
+              <span class="fw-semibold">{{ username() }}</span>
+            </div>
+          </div>
+
+          <!-- Logout -->
+          <button class="btn btn-outline-danger" (click)="logout()">
+            Logout
+          </button>
+
+        </div>
+        }
+
+
+      </div>
+
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,32 @@
+<li
+  class="list-group-item d-flex align-items-center gap-3 py-3 px-3"
+  [class.completed]="todo()?.completed"
+>
+  <!-- Checkbox -->
+  <input
+    class="form-check-input mt-0"
+    type="checkbox"
+    [checked]="todo()?.completed"
+    [id]="'todo-' + todo()?._id"
+    (change)="updateStatus()"
+  />
+
+  <!-- Todo title -->
+  <label
+    class="form-check-label flex-grow-1"
+    [for]="'todo-' + todo()?._id"
+  >
+    {{ todo()?.title }}
+  </label>
+
+  <!-- Delete button -->
+  <button
+    type="button"
+    class="btn btn-sm btn-outline-danger"
+    [disabled]="todo()?.completed"
+    (click)="deletetodo()"
+  >
+    <i class="bi bi-trash"></i>
+    Delete
+  </button>
+</li>

@@ -1,0 +1,46 @@
+<div class="admin-container">
+
+  <div class="dashboard-header">
+    <h2>Admin Dashboard</h2>
+    <p>Manage registered users</p>
+  </div>
+
+  <div class="user-list">
+
+    <!-- Header -->
+    <div class="user-row user-header">
+      <span>Username</span>
+      <span>Email</span>
+      <span>Actions</span>
+    </div>
+
+    <!-- Users -->
+    @for (user of users(); track user._id) {
+      <div class="user-row">
+
+        <div class="username">
+          <div class="user-avatar">
+            {{ user.username.charAt(0).toUpperCase() }}
+          </div>
+
+          <span>{{ user.username }}</span>
+        </div>
+
+        <span class="email">{{ user.email }}</span>
+
+        <div class="actions">
+          <button class="btn btn-sm btn-outline-primary">
+            Edit
+          </button>
+
+          <button class="btn btn-sm btn-outline-danger">
+            Delete
+          </button>
+        </div>
+
+      </div>
+    }
+
+  </div>
+
+</div>

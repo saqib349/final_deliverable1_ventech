@@ -1,0 +1,127 @@
+<div class="card shadow-sm border-0 mt-4">
+
+  <!-- Header -->
+  <div class="card-header bg-primary text-white">
+    <h4 class="mb-0">Add Todo</h4>
+  </div>
+
+  <!-- Form -->
+  <div class="card-body">
+
+    <form [formGroup]="addForm" (ngSubmit)="add()">
+
+      <!-- Title -->
+      <div class="mb-4">
+
+        <label for="title" class="form-label fw-semibold">
+          Title <span class="text-danger">*</span>
+        </label>
+
+        <input
+          type="text"
+          id="title"
+          class="form-control"
+          formControlName="title"
+          placeholder="Enter title of the todo"
+          [class.is-invalid]="
+            addForm.get('title')?.invalid &&
+            addForm.get('title')?.touched
+          "
+        >
+
+        @if (
+          addForm.get('title')?.hasError('required') &&
+          addForm.get('title')?.touched
+        ) {
+          <div class="invalid-feedback">
+            Title is required.
+          </div>
+        }
+
+        @if (
+          addForm.get('title')?.hasError('minlength') &&
+          addForm.get('title')?.touched
+        ) {
+          <div class="invalid-feedback">
+            Title must be at least 6 characters.
+          </div>
+        }
+
+      </div>
+
+
+      <!-- Status -->
+      <fieldset class="mb-4">
+
+        <legend class="fs-6 fw-semibold mb-3">
+          Status <span class="text-danger">*</span>
+        </legend>
+
+        <div class="d-flex gap-4">
+
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              id="completed"
+              [value]="true"
+              formControlName="status"
+            >
+
+            <label
+              class="form-check-label"
+              for="completed"
+            >
+              Completed
+            </label>
+          </div>
+
+
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              id="notCompleted"
+              [value]="false"
+              formControlName="status"
+            >
+
+            <label
+              class="form-check-label"
+              for="notCompleted"
+            >
+              Not Completed
+            </label>
+          </div>
+
+        </div>
+
+        @if (
+          addForm.get('status')?.hasError('required') &&
+          addForm.get('status')?.touched
+        ) {
+          <div class="text-danger small mt-2">
+            Please select a status.
+          </div>
+        }
+
+      </fieldset>
+
+
+      <!-- Submit -->
+      <div class="d-flex justify-content-end">
+
+        <button
+          type="submit"
+          class="btn btn-primary px-4"
+          [disabled]="addForm.invalid"
+        >
+          Add Todo
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>

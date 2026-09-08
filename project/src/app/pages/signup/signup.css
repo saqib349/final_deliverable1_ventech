@@ -1,0 +1,38 @@
+.signup-page {
+  min-height: calc(100vh - 56px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(13, 110, 253, 0.15),
+      rgba(111, 66, 193, 0.15)
+    );
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 450px;
+
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 1.25rem;
+}
+
+.signup-card .form-control {
+  border-radius: 0.75rem;
+}
+
+.signup-card .form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+.signup-card .btn {
+  border-radius: 0.75rem;
+}

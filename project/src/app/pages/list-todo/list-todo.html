@@ -1,0 +1,80 @@
+<div class="container py-4">
+
+  <ng-template #showItems>
+    <div class="card shadow-sm border-0 rounded-3 mt-4">
+
+      <!-- Header -->
+      <div class="card-header bg-primary text-white py-3">
+        <h4 class="mb-0 fw-semibold">
+          📝 My Todos
+        </h4>
+      </div>
+
+      <div class="card-body p-0">
+
+        <!-- Loading -->
+        @if (loading) {
+        <div class="text-center py-5">
+          <div
+            class="spinner-border text-primary mb-3"
+            role="status">
+          </div>
+
+          <p class="text-muted mb-0">
+            Loading todos...
+          </p>
+        </div>
+        }
+
+        @else {
+
+        <!-- Todo List -->
+        <ul class="list-group list-group-flush">
+
+          <!-- Empty State -->
+          @if (filteredTodos().length < 1) {
+          <li class="list-group-item border-0 text-center py-5">
+
+            <div class="fs-1 mb-3">
+              📝
+            </div>
+
+            <h5 class="fw-semibold text-dark mb-2">
+              No todos yet
+            </h5>
+
+            <p class="text-muted mb-0">
+              You don't have any todos right now.
+              Add one to get started!
+            </p>
+
+          </li>
+          }
+
+          <!-- Todos -->
+          @for (todo of filteredTodos(); track todo._id) {
+          <app-todoslist
+            [todo]="todo"
+            (updateTodo)="updateStatus($event)"
+            (deleteTodo)="deletetodo($event)">
+          </app-todoslist>
+          }
+
+        </ul>
+        }
+
+      </div>
+    </div>
+  </ng-template>
+
+
+   <!-- Add Todo -->
+  <div >
+    <app-add-todo
+      (addTodo)="addtodo($event)">
+    </app-add-todo>
+  </div>
+  <ng-container [ngTemplateOutlet]="showItems">
+  </ng-container>
+
+</div>
