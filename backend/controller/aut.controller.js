@@ -45,7 +45,7 @@ export async function login(req, res) {
         res.cookie('token', token, {
             httpOnly: true,
             secure: false,
-            sameSite: 'lax'
+            sameSite: 'none'
         });
         res.json({
             data: user,
