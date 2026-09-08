@@ -1,6 +1,4 @@
 import jwt from "jsonwebtoken"
-
-process.loadEnvFile()
 export function createToken(user){
     return jwt.sign(user,process.env.SECRETE_KEY)
 }
