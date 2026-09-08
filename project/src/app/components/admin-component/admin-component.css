@@ -93,3 +93,110 @@
 .user-row:not(.user-header):hover {
   background-color: #f8f9fa;
 }
+
+@media (max-width: 768px) {
+
+  .admin-container {
+    padding: 25px 15px;
+  }
+
+  .user-row {
+    grid-template-columns: 1fr 1fr 150px;
+    gap: 12px;
+    padding: 14px 15px;
+  }
+
+  .email {
+    font-size: 14px;
+  }
+
+  .actions button {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 600px) {
+
+  .admin-container {
+    padding: 20px 12px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 24px;
+  }
+
+  .dashboard-header p {
+    font-size: 14px;
+  }
+
+  /*
+    Hide the desktop table header
+    because the layout changes on mobile.
+  */
+  .user-header {
+    display: none;
+  }
+
+  .user-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 18px 16px;
+  }
+
+  .username {
+    width: 100%;
+  }
+
+  .email {
+    width: 100%;
+    font-size: 14px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .actions button {
+    flex: 1;
+  }
+}
+
+
+/* =========================
+   Very small phones
+========================= */
+
+@media (max-width: 380px) {
+
+  .admin-container {
+    padding: 15px 10px;
+  }
+
+  .user-row {
+    padding: 15px 12px;
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}

@@ -1,18 +1,38 @@
+/* =========================
+   User avatar
+========================= */
+
 .user-avatar {
   width: 38px;
   height: 38px;
+  min-width: 38px;
+
   border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   background-color: #0d6efd;
   color: white;
+
   font-weight: 600;
   font-size: 16px;
 }
 
+
+/* =========================
+   User information
+========================= */
+
 .user-info {
+  display: flex;
+  flex-direction: column;
+
   line-height: 1.1;
+
+  min-width: 0;
+  max-width: 150px;
 }
 
 .user-info small {
@@ -21,4 +41,143 @@
 
 .user-info span {
   font-size: 14px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* =========================
+   Right section
+========================= */
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+/* Search */
+
+.navbar-search {
+  width: 250px;
+}
+
+
+/* Login / Signup */
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+/* User + logout */
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-width: 0;
+}
+
+
+/* =========================
+   Tablet
+========================= */
+
+@media (max-width: 991.98px) {
+
+  .navbar-right {
+    width: 100%;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    margin-top: 12px;
+    padding-top: 12px;
+
+    border-top: 1px solid #dee2e6;
+  }
+
+  .navbar-search {
+    width: 100%;
+  }
+
+  .auth-buttons {
+    width: 100%;
+  }
+
+  .auth-buttons .btn {
+    flex: 1;
+  }
+
+  .user-section {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .user-profile {
+    flex: 1;
+  }
+
+  .user-info {
+    max-width: none;
+  }
+
+  .logout-btn {
+    flex-shrink: 0;
+  }
+}
+
+
+/* =========================
+   Small mobile
+========================= */
+
+@media (max-width: 575.98px) {
+
+  .container-fluid {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .navbar-right {
+    gap: 10px;
+  }
+
+  .user-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .user-profile {
+    width: 100%;
+  }
+
+  .logout-btn {
+    width: 100%;
+  }
+
+  .auth-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .auth-buttons .btn {
+    width: 100%;
+  }
+
 }
