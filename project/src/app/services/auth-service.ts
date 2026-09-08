@@ -7,7 +7,7 @@ import { catchError, of, tap } from 'rxjs';
 export class AuthService {
     http = inject(HttpClient)
     isAuthenticated = signal(false)
-    username=signal("saqib")
+    username=signal("")
     role=signal("user")
 
     checkAuth() {

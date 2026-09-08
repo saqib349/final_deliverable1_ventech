@@ -9,7 +9,8 @@ import { Signup } from './pages/signup/signup';
 export const routes: Routes = [
     {
         path:"",
-        component: Main
+        component: Main,
+        canActivate:[authGuardGuard]
     },
     {
         path:"listTodo",
