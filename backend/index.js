@@ -22,6 +22,11 @@ app.get("/auth/me",authMiddleware,(req,res)=>{
             data:req.user
         })
 })
+app.get("/",(req,res)=>{
+    res.json({
+        message:"heello "
+    })
+})
 
 app.use("/todo",authMiddleware,todoRouter)
 app.use("/user",authRouter)
