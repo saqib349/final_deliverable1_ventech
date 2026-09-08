@@ -3,7 +3,6 @@ import Todo from "../models/todos.model.js";
 export async function addTodo(req, res) {
     try {
         const userId = req.user._id
-        console.log(userId)
         const { title, completed } = req.body
         const result = await Todo.create({
             userId,
@@ -28,7 +27,6 @@ export async function addTodo(req, res) {
 export async function deleteTodo(req, res) {
     try {
         const _id = req.params.id
-        console.log(_id)
         const todo =await Todo.findByIdAndDelete(_id)
         console.log(todo)
         if (!todo) {

@@ -6,7 +6,6 @@ import { comparePasswords, hashigPassword } from "../util/hashing.js"
 export async function signup(req, res) {
     try {
         const { username, email, password } = req.body
-        console.log(username, email, password)
         const hashedPassword = await hashigPassword(password)
         const result = await User.create({
             username,
@@ -28,7 +27,6 @@ export async function login(req, res) {
     try {
 
         const { email, password } = req.body
-        console.log(email, password)
         const user = await User.findOne({ email })
         if (!user) {
             return res.status(404).json({
@@ -63,8 +61,8 @@ export function logout(req,res){
     console.log(req.cookies.token)
     res.clearCookie("token",{
             httpOnly: true,
-            secure: false,
-            sameSite: 'lax'
+            secure: true,
+            sameSite: 'none'
         })
     res.json({
         message:"successfully login"
