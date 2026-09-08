@@ -1,0 +1,95 @@
+.admin-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.dashboard-header {
+  margin-bottom: 25px;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.dashboard-header p {
+  margin-top: 5px;
+  color: #6c757d;
+}
+
+/* User list */
+
+.user-list {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Each row */
+
+.user-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 180px;
+  align-items: center;
+  min-height: 65px;
+  padding: 0 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.user-row:last-child {
+  border-bottom: none;
+}
+
+/* Header */
+
+.user-header {
+  min-height: 50px;
+  background-color: #f8f9fa;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+/* Username */
+
+.username {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.user-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #0d6efd;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.email {
+  color: #6c757d;
+}
+
+/* Buttons */
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Hover */
+
+.user-row:not(.user-header):hover {
+  background-color: #f8f9fa;
+}

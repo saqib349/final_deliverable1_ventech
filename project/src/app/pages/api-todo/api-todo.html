@@ -1,0 +1,64 @@
+<div class="container py-4">
+  <app-add-todo (addTodo)="AddTodo($event)"></app-add-todo>
+  <div class="card shadow-sm border-0 mt-4  ">
+
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">My api todos</h4>
+    </div>
+
+    <div class="card-body p-0">
+      @if (!loading()) {
+
+      @if (errorMessage) {
+
+      <p>{{ errorMessage }}</p>
+
+      @if (canRetry) {
+      <button (click)="loadTodos()">Retry</button>
+      }
+
+      }
+
+      @else if (filteredTodos().length < 1) { <li class="list-group-item border-0 text-center py-5">
+
+        <div class="fs-1 mb-3">
+          📝
+        </div>
+
+        <h5 class="fw-semibold text-dark mb-2">
+          No todos yet
+        </h5>
+
+        <p class="text-muted mb-0">
+          You don't have any todos right now.
+          Add one to get started!
+        </p>
+
+        </li>
+        }
+
+        @else {
+
+        <ul class="list-group list-group-flush">
+
+          @for (todo of filteredTodos(); track todo._id) {
+          <app-todoslist [todo]="todo" (updateTodo)="UpdateStatus($event)" (deleteTodo)="Deletetodo($event)">
+          </app-todoslist>
+          }
+
+        </ul>
+
+        }
+
+        }
+        @else {
+
+        <div class="text-center py-5">
+          <div class="spinner-border text-primary mb-3" role="status"></div>
+          <p class="text-muted mb-0">Loading todos...</p>
+        </div>
+
+        }
+    </div>
+  </div>
+</div>

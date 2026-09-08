@@ -1,0 +1,53 @@
+
+@if(isAdmin()){
+    <app-admin-component></app-admin-component>
+} 
+
+@else {
+  <div class="user-dashboard">
+
+    <div class="welcome-card">
+      <div>
+        <p class="dashboard-label">USER DASHBOARD</p>
+
+        <h1>Welcome back, {{ username() }} 👋</h1>
+
+        <p class="description">
+          Manage your tasks, stay organized, and keep track of your
+          daily activities from your personal dashboard.
+        </p>
+
+        <a routerLink="/apiTodo" class="btn btn-primary">
+          Manage My Todos
+        </a>
+      </div>
+    </div>
+
+    <div class="dashboard-info">
+      <div class="info-card">
+        <h5>My Todos</h5>
+        <p>
+          Create, update, complete, and delete your personal tasks
+          whenever you need.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h5>Personal Workspace</h5>
+        <p>
+          Your dashboard is private and your tasks are managed
+          separately from other users.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h5>Stay Organized</h5>
+        <p>
+          Keep your work organized and stay productive by managing
+          your tasks in one place.
+        </p>
+      </div>
+    </div>
+
+  </div>
+}
