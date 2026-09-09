@@ -12,7 +12,7 @@ import { catchError, EMPTY, exhaustMap, Subject } from 'rxjs';
 })
 export class Login {
   router = inject(Router)
-  errorMessage = ""
+  errorMessage = signal("")
   authService = inject(AuthService)
   private clickLogin$ = new Subject<void>()
 
@@ -28,7 +28,7 @@ export class Login {
 
         return this.authService.loginUser(user).pipe(
           catchError((err) => {
-            this.errorMessage = err.error.message;
+            this.errorMessage.set(err.error.message);
             return EMPTY;
           })
         );
@@ -37,13 +37,10 @@ export class Login {
     )
     .subscribe({
       next: (result) => {
-
         this.authService.isAuthenticated.set(true);
         this.authService.username.set(result.data.username);
         this.authService.role.set(result.data.role);
-
         this.router.navigate(['/']);
-
       }
     });
 }

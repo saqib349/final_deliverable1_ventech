@@ -85,9 +85,9 @@
         </button>
 
       </form>
-      @if (errorMessage){
+      @if (errorMessage()){
          <div class="text-danger small mt-1">
-              {{errorMessage}}
+              {{errorMessage()}}
             </div>
       }
 
