@@ -36,3 +36,31 @@ export async function deleteUser(req,res){
 
 }
 
+export async function updateUser(req,res){
+    try{
+        const _id=req.params.id
+        const {username,email,role}=req.body 
+        const user =await  User.findByIdAndUpdate(_id,{
+            username,
+            email,
+            role
+        },
+        {returnDocument:"after"}
+    )
+        if (!user){
+            res.status(404).json({
+                message:"user not found"
+            })
+        }
+        res.json({
+            data:user
+        })
+    }   
+    catch(err){
+        res.status(400).json({
+            message:err.message
+        })
+    }
+
+}
+

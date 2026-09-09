@@ -5,56 +5,200 @@
     <p>Manage registered users</p>
   </div>
 
+
+  <!-- User List -->
   <div class="user-list">
 
     <!-- Header -->
     <div class="user-row user-header">
+
       <span>Username</span>
+
       <span>Email</span>
+
       <span>Role</span>
+
       <span>Actions</span>
+
     </div>
+
 
     <!-- Users -->
     @for (user of users(); track user._id) {
+
       <div class="user-row">
 
         <!-- Username -->
         <div class="username">
+
           <div class="user-avatar">
             {{ user.username.charAt(0).toUpperCase() }}
           </div>
 
-          <span>{{ user.username }}</span>
+          <span>
+            {{ user.username }}
+          </span>
+
         </div>
+
 
         <!-- Email -->
         <span class="email">
           {{ user.email }}
         </span>
 
+
         <!-- Role -->
         <span class="role">
           {{ user.role }}
         </span>
 
+
         <!-- Actions -->
         <div class="actions">
-          <button class="btn btn-sm btn-outline-primary">
+
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-primary"
+            (click)="EditUser(user)"
+          >
             Edit
           </button>
 
+
           <button
+            type="button"
             class="btn btn-sm btn-outline-danger"
             (click)="DeleteUser(user._id)"
           >
             Delete
           </button>
+
         </div>
 
       </div>
+
     }
 
   </div>
+
+
+  <!-- Edit User Modal -->
+  @if (showEditModal()) {
+
+    <div class="modal-backdrop">
+
+      <div class="edit-modal">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+
+          <h3>Edit User</h3>
+
+          <button
+            type="button"
+            class="close-btn"
+            (click)="closeEditModal()"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        <!-- Edit Form -->
+        <form (ngSubmit)="UpdateUser()">
+
+          <!-- Username -->
+          <div class="form-group">
+
+            <label for="username">
+              Username
+            </label>
+
+            <input
+              id="username"
+              type="text"
+              [(ngModel)]="editUser.username"
+              name="username"
+              required
+            />
+
+          </div>
+
+
+          <!-- Email -->
+          <div class="form-group">
+
+            <label for="email">
+              Email
+            </label>
+
+            <input
+              id="email"
+              type="email"
+              [(ngModel)]="editUser.email"
+              name="email"
+              required
+            />
+
+          </div>
+
+
+          <!-- Role -->
+          <div class="form-group">
+
+            <label for="role">
+              Role
+            </label>
+
+            <select
+              id="role"
+              [(ngModel)]="editUser.role"
+              name="role"
+              required
+            >
+
+              <option value="user">
+                User
+              </option>
+
+              <option value="admin">
+                Admin
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Modal Actions -->
+          <div class="modal-actions">
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="closeEditModal()"
+            >
+              Cancel
+            </button>
+
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+            >
+              Save Changes
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  }
 
 </div>

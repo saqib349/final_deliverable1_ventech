@@ -13,4 +13,8 @@ export class UserService {
     deleteUser(_id:string){
         return this.http.delete<{data:Admin_users}>(`https://final-deliverable1-ventech-o7q6.vercel.app/admin/user/${_id}`)
     }
+    updateUser(user:Admin_users){
+        return this.http.patch<{data:Admin_users}>(`https://final-deliverable1-ventech-o7q6.vercel.app/admin/user/${user._id}`,user)
+    }
+
 }
