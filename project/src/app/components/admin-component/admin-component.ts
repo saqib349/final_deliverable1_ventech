@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { UserService } from '../../services/user-service';
 import { FormsModule } from '@angular/forms';
+import { finalize, single } from 'rxjs';
 
 @Component({
   selector: 'app-admin-component',
@@ -11,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class AdminComponent implements OnInit {
   users=signal<Array<Admin_users>>([])
   message=""
+  loading=signal(false)
   userService=inject(UserService)
   showEditModal = signal(false);
 
@@ -23,7 +25,12 @@ export class AdminComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe({
+    this.loading.set(true)
+    this.userService.getUsers().pipe(
+      finalize(() => {
+        this.loading.set(false);
+      })
+    ).subscribe({
       next:(result)=>{
         console.log(result.data)
          this.users.set(result.data)
