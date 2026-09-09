@@ -11,6 +11,6 @@ export class UserService {
         return this.http.get<{data:Admin_users[]}>("https://final-deliverable1-ventech-o7q6.vercel.app/admin/user")
     }
     deleteUser(_id:string){
-        return this.http.delete<{data:Admin_users}>(`http://localhost:8000/admin/user/${_id}`)
+        return this.http.delete<{data:Admin_users}>(`https://final-deliverable1-ventech-o7q6.vercel.app/admin/user/${_id}`)
     }
 }
