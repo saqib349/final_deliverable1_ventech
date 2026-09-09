@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { Router, RouterLink } from '@angular/router';
+import { catchError, EMPTY, exhaustMap, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +11,42 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
-  router=inject(Router)
-  errorMessage=""
-  authService=inject(AuthService)
+  router = inject(Router)
+  errorMessage = ""
+  authService = inject(AuthService)
+  private clickLogin$ = new Subject<void>()
+
+  constructor() {
+  this.clickLogin$
+    .pipe(
+      exhaustMap(() => {
+
+        const user: Omit<User, "username" | "role"> = {
+          email: this.loginForm.controls.email.value,
+          password: this.loginForm.controls.password.value
+        };
+
+        return this.authService.loginUser(user).pipe(
+          catchError((err) => {
+            this.errorMessage = err.error.message;
+            return EMPTY;
+          })
+        );
+
+      })
+    )
+    .subscribe({
+      next: (result) => {
+
+        this.authService.isAuthenticated.set(true);
+        this.authService.username.set(result.data.username);
+        this.authService.role.set(result.data.role);
+
+        this.router.navigate(['/']);
+
+      }
+    });
+}
 
   loginForm = new FormGroup({
     email: new FormControl<string>('', {
@@ -32,25 +66,7 @@ export class Login {
   })
 
   handleLogin() {
-
-  
-  const user:Omit<User,"username" | "role">={
-      email : this.loginForm.controls.email.value,
-      password : this.loginForm.controls.password.value
+    this.clickLogin$.next()
   }
-  this.authService.loginUser(user).subscribe({
-    next:(result)=>{
-      this.authService.isAuthenticated.set(true)
-      this.authService.username.set(result.data.username)
-      this.authService.role.set(result.data.role)
-      console.log(this.authService.isAuthenticated(),this.authService.username(),this.authService.role())
-      this.router.navigate(['/'])
-    },
-    error:(err)=>{
-      this.errorMessage=err.error.message
-      console.log(this.errorMessage)
-    }
-  })
-}
 
 }
