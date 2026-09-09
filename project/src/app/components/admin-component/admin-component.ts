@@ -10,6 +10,7 @@ import { UserService } from '../../services/user-service';
 export class AdminComponent implements OnInit {
   users=signal<Array<Admin_users>>([])
   message=""
+  userService=inject(UserService)
   ngOnInit(): void {
     this.userService.getUsers().subscribe({
       next:(result)=>{
@@ -20,9 +21,22 @@ export class AdminComponent implements OnInit {
         this.message=err.error.message
       }
     })
+
    
   }
-  userService=inject(UserService)
+
+  DeleteUser(_id:string){
+    this.userService.deleteUser(_id).subscribe({
+      next:()=>{
+        this.users.update(u=>{
+          return u.filter(user=>user._id!==_id)
+        })
+      },
+      error:(err)=>{
+        this.message=err.error.message
+      }
+    })
+  }
 
   
 }

@@ -10,5 +10,6 @@ type Admin_users = {
     _id:string,
     username:string,
     email:string,
-    password:string
+    password:string,
+    role:string
 }

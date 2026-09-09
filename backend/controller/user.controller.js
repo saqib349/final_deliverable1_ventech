@@ -15,3 +15,24 @@ export async function getUsers(req,res){
     }
     
 }
+export async function deleteUser(req,res){
+    try{
+        const _id=req.params.id
+        const user =await  User.findByIdAndDelete(_id)
+        if (!user){
+            res.status(404).json({
+                message:"user not found"
+            })
+        }
+        res.json({
+            data:user
+        })
+    }   
+    catch(err){
+        res.status(400).json({
+            message:err.message
+        })
+    }
+
+}
+
