@@ -19,16 +19,16 @@ export class Header {
   searching(value:string){
     this.searchService.searchTerm.set(value)
   }
-  logout(){
-    this.authService.logoutUser().subscribe(()=>{
-        this.router.navigate(['/login'])
-    })
-  }
+  
   isAuthenticated=computed(()=>{
-    
     return this.authService.isAuthenticated()
   })
   username=computed(()=>{
     return this.authService.username()
   })
+  logout(){
+    this.authService.logoutUser().subscribe(()=>{
+        this.router.navigate(['/login'])
+    })
+  }
 }

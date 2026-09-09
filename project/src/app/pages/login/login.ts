@@ -51,17 +51,6 @@ export class Login {
       console.log(this.errorMessage)
     }
   })
-  // const exists = this.users().some(
-  //   user => username === user.username &&  password===user.password
-  // );
-
-  // if (exists) {
-  //   this.authService.loggedIn.set(true)
-  //   this.router.navigate(['/']);
-  // }
-  // else {
-  //   this.errorMessage="username or password not correct"
-  // }
 }
 
 }

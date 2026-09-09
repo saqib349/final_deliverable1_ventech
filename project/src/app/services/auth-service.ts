@@ -31,6 +31,8 @@ export class AuthService {
         return this.http.post("https://final-deliverable1-ventech-o7q6.vercel.app/user/logout", {}).pipe(
             tap(() => {
                 this.isAuthenticated.set(false);
+                this.username.set("")
+                this.role.set("user")
             })
         )
     }
