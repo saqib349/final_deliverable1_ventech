@@ -18,7 +18,7 @@ export class AuthService {
                 this.isAuthenticated.set(true);
                 this.username.set(result.data.username)
                 this.role.set(result.data.role)
-            }),
+        }),
             catchError(() => {
                 this.isAuthenticated.set(false);
                 return of(null);

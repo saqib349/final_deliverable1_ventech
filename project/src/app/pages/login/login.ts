@@ -63,6 +63,7 @@ export class Login {
   })
 
   handleLogin() {
+    this.errorMessage.set('')
     this.clickLogin$.next()
   }
 
