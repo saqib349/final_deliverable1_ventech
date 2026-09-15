@@ -27,41 +27,42 @@ export class ApiTodo implements OnInit, OnDestroy {
   searchService = inject(SearchService)
 
   loading = signal(false);
-  errorMessage = '';
+  errorMessage =signal("")
+  successfullMessage=signal("")
   canRetry = false;
 
   loadTodos(): void {
+
     this.todos.set([])
     this.loading.set(true)
-    this.errorMessage = '';
+    this.errorMessage.set("")
     this.canRetry = false;
 
     this.apiService.getTodos().subscribe(
       {
-
         next: (result) => {
           const { data } = result
           this.todos.set(data)
           this.loading.set(false)
-          this.errorMessage = '';
+          this.errorMessage.set("")
           this.canRetry = false;
         },
 
         error: (err) => {
-          if (err.error.status >= 500 && err.error.status <= 500) {
+          if (err.status>= 500 && err.status <= 600) {
             this.canRetry = true
           }
           this.loading.set(false)
-          this.errorMessage = err.error.message
+          this.errorMessage.set(err.error.message)
         }
       });
   }
 
   UpdateStatus(todo: todo | undefined) {
-    console.log(todo)
-
     if (!todo) return;
     const newtodo = { ...todo, completed: !todo.completed }
+    this.errorMessage.set('')
+    this.successfullMessage.set("")
     this.apiService.updateTodo(newtodo._id, newtodo).subscribe({
       next: (result) => {
         this.todos.update(todos =>
@@ -71,23 +72,27 @@ export class ApiTodo implements OnInit, OnDestroy {
               : t
           )
         );
+        this.successfullMessage.set(`successfull update todo: ${result.data.title}`)
       },
       error: (err) => {
-        this.errorMessage=err.error.message
+        this.successfullMessage.set("")
+        this.errorMessage.set(err.error.message)
       }
     })
    }
 
   AddTodo(todo: createTodo) {
+    this.errorMessage.set("")
+    this.successfullMessage.set("")
     this.apiService.addTodo(todo).subscribe({
       next: (result) => {
         const { data } = result
         this.todos.update(todos => [...todos, data]);
+        this.successfullMessage.set(`successfull added todo: ${result.data.title}`)
       },
       error: (error) => {
-        const message = error.error.message
-        console.log(message)
-        this.errorMessage = message
+        this.successfullMessage.set("")
+        this.errorMessage.set(error.error.message)
       }
     })
   }
@@ -95,17 +100,20 @@ export class ApiTodo implements OnInit, OnDestroy {
   Deletetodo(todo: todo | undefined) {
     if (!todo) return;
     const id = todo._id
+    this.errorMessage.set("")
+    this.successfullMessage.set("")
     this.apiService.deleteTodo(id).subscribe({
       next: (result) => {
-        console.log(result)
         this.todos.update(todos =>
           todos.filter(t =>
             t._id !== todo._id
           )
         );
+        this.successfullMessage.set(`successfull deleted todo: ${result.data.title}`)
       },
       error: (err) => {
-        this.errorMessage = err.error.message
+        this.successfullMessage.set("")
+        this.errorMessage.set(err.error.message)
       }
     })
 

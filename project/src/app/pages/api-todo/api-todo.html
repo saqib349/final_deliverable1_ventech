@@ -9,15 +9,29 @@
     <div class="card-body p-0">
       @if (!loading()) {
 
-      @if (errorMessage) {
+      @if (errorMessage()) {
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ errorMessage() }}
 
-      <p>{{ errorMessage }}</p>
+        <button type="button" class="btn-close" aria-label="Close" (click)="errorMessage.set('')">
+        </button>
+      </div>
+      }
+
+      @if (successfullMessage()) {
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ successfullMessage() }}
+
+        <button type="button" class="btn-close" aria-label="Close" (click)="successfullMessage.set('')">
+        </button>
+      </div>
+      }
 
       @if (canRetry) {
       <button (click)="loadTodos()">Retry</button>
       }
 
-      }
+
 
       @else if (filteredTodos().length < 1) { <li class="list-group-item border-0 text-center py-5">
 
