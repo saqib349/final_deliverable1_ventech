@@ -9,8 +9,13 @@
     <div class="welcome-card">
       <div>
         <p class="dashboard-label">USER DASHBOARD</p>
-
-        <h1>Welcome back, {{ username() }} 👋</h1>
+        @if(authenticated()){
+          <h1>login to manage your todos</h1>
+        }
+        @else {
+          <h1>Welcome back, {{ username() }} 👋</h1>
+        }
+        
 
         <p class="description">
           Manage your tasks, stay organized, and keep track of your

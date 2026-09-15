@@ -13,6 +13,7 @@ import { RouterLink } from "@angular/router";
 export class Main {
   
   authService=inject(AuthService)
+  authenticated=this.authService.isAuthenticated
   isAdmin = computed(()=>{
     if (this.authService.role()==="admin"){
       return true

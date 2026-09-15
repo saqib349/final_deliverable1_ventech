@@ -10,7 +10,6 @@ export const routes: Routes = [
     {
         path:"",
         component: Main,
-        canActivate:[authGuardGuard]
     },
     {
         path:"listTodo",
