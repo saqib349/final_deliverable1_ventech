@@ -11,5 +11,5 @@ import { ListTodo } from './pages/list-todo/list-todo';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('project');
+  protected readonly title = signal('TaskFlow');
 }
