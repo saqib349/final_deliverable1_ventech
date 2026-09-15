@@ -22,12 +22,16 @@ app.get("/auth/me",authMiddleware,(req,res)=>{
             data:req.user
         })
 })
+
+
+// response should be return like: return res.json()
 app.get("/",(req,res)=>{
     res.json({
         message:"heello "
     })
 })
 
+// initial routes should be plural like todos,users etc
 app.use("/todo",authMiddleware,todoRouter)
 app.use("/user",authRouter)
 app.use("/admin/user",authMiddleware,authorizationMiddleWare,userRouter)
