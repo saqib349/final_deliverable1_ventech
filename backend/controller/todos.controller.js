@@ -31,7 +31,7 @@ export async function deleteTodo(req, res) {
         console.log(todo)
         if (!todo) {
             return res.status(404).json({
-                message: "user not found with this id"
+                message: "todo not found with this id"
             })
         }
         return res.status(200).json({
