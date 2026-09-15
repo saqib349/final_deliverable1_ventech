@@ -1,3 +1,4 @@
+
 <div class="login-page">
 
   <div class="card login-card border-0 shadow-lg">
@@ -13,7 +14,7 @@
 
       <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
 
-        <!-- email -->
+        <!-- Email -->
         <div class="mb-3">
 
           <label for="username" class="form-label fw-semibold">
@@ -21,24 +22,33 @@
           </label>
 
           <input
-            type="text"
+            type="email"
             id="username"
             class="form-control form-control-lg"
             placeholder="Enter email"
             formControlName="email"
           >
-          
 
           @if (
-            loginForm.get('username')?.invalid &&
-            loginForm.get('username')?.touched
+            loginForm.get('email')?.hasError('required') &&
+            loginForm.get('email')?.touched
           ) {
             <div class="text-danger small mt-1">
-              email is required.
+              Email is required.
+            </div>
+          }
+
+          @else if (
+            loginForm.get('email')?.hasError('email') &&
+            loginForm.get('email')?.touched
+          ) {
+            <div class="text-danger small mt-1">
+              Please enter a valid email address.
             </div>
           }
 
         </div>
+
 
         <!-- Password -->
         <div class="mb-4">
@@ -47,19 +57,39 @@
             Password
           </label>
 
-          <input
-            type="password"
-            id="password"
-            class="form-control form-control-lg"
-            placeholder="Enter password"
-            formControlName="password"
-          >
-           @if (
+          <div class="input-group">
+
+            <input
+              [type]="showPassword() ? 'text' : 'password'"
+              id="password"
+              class="form-control form-control-lg"
+              placeholder="Enter password"
+              formControlName="password"
+            >
+
+            <button
+              type="button"
+              class="btn btn-outline-secondary password-toggle"
+              (click)="togglePassword()"
+              [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+            >
+              @if (showPassword()) {
+                <i class="bi bi-eye-slash"></i>
+              }
+              @else {
+                <i class="bi bi-eye"></i>
+              }
+            </button>
+
+          </div>
+
+
+          @if (
             loginForm.get('password')?.hasError('minlength') &&
             loginForm.get('password')?.touched
           ) {
             <div class="text-danger small mt-1">
-              minimum length should be 8 character
+              Minimum length should be 8 characters.
             </div>
           }
 
@@ -71,9 +101,9 @@
               Password is required.
             </div>
           }
-         
 
         </div>
+
 
         <!-- Login -->
         <button
@@ -85,15 +115,22 @@
         </button>
 
       </form>
-      @if (errorMessage()){
-         <div class="text-danger small mt-1">
-              {{errorMessage()}}
-            </div>
+
+
+      @if (errorMessage()) {
+        <div class="text-danger small mt-1">
+          {{ errorMessage() }}
+        </div>
       }
+
 
       <div class="text-center mt-4">
         <span class="text-muted">Don't have an account?</span>
-        <a routerLink="/signup" class="text-decoration-none fw-semibold ms-1">
+
+        <a
+          routerLink="/signup"
+          class="text-decoration-none fw-semibold ms-1"
+        >
           Sign Up
         </a>
       </div>

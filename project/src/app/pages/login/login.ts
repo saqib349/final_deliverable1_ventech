@@ -14,6 +14,7 @@ export class Login {
   router = inject(Router)
   errorMessage = signal("")
   authService = inject(AuthService)
+  showPassword=signal(false)
   private clickLogin$ = new Subject<void>()
 
   constructor() {
@@ -49,7 +50,8 @@ export class Login {
     email: new FormControl<string>('', {
       nonNullable: true,
       validators: [
-        Validators.required
+        Validators.required,
+        Validators.email
       ]
     }
     ),
@@ -65,6 +67,9 @@ export class Login {
   handleLogin() {
     this.errorMessage.set('')
     this.clickLogin$.next()
+  }
+   togglePassword() {
+    this.showPassword.update(value => !value);
   }
 
 }

@@ -9,7 +9,7 @@
     <div class="welcome-card">
       <div>
         <p class="dashboard-label">USER DASHBOARD</p>
-        @if(authenticated()){
+        @if(!authenticated()){
           <h1>login to manage your todos</h1>
         }
         @else {
