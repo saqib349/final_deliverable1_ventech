@@ -36,3 +36,19 @@
 .signup-card .btn {
   border-radius: 0.75rem;
 }
+
+.password-toggle {
+  min-width: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.password-toggle:focus {
+  box-shadow: none;
+}
+
+.password-toggle i {
+  pointer-events: none;
+}

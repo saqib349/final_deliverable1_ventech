@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth-service';
 export class Signup {
   router = inject(Router)
   errorMessage = ""
+  showPassword=signal(false)
   authService=inject(AuthService)
  
   signupForm = new FormGroup({
@@ -26,7 +27,8 @@ export class Signup {
     email: new FormControl<string>('', {
       nonNullable: true,
       validators: [
-        Validators.required
+        Validators.required,
+        Validators.email
       ]
     }),
     password: new FormControl<string>('', {
@@ -55,6 +57,9 @@ export class Signup {
         }
       })
 
+  }
+  togglePassword() {
+    this.showPassword.update(value => !value);
   }
 
 }

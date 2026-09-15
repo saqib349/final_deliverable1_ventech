@@ -93,30 +93,40 @@
             Password
           </label>
 
-          <input
-            type="password"
-            id="password"
-            class="form-control form-control-lg"
-            placeholder="Enter password"
-            formControlName="password"
-          >
+          <div class="input-group">
+
+            <input [type]="showPassword() ? 'text' : 'password'" id="password" class="form-control form-control-lg"
+              placeholder="Enter password" formControlName="password">
+
+            <button type="button" class="btn btn-outline-secondary password-toggle" (click)="togglePassword()"
+              [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+              @if (showPassword()) {
+              <i class="bi bi-eye-slash"></i>
+              }
+              @else {
+              <i class="bi bi-eye"></i>
+              }
+            </button>
+
+          </div>
+
 
           @if (
-            signupForm.get('password')?.hasError('minlength') &&
-            signupForm.get('password')?.touched
+          signupForm.get('password')?.hasError('minlength') &&
+          signupForm.get('password')?.touched
           ) {
-            <div class="text-danger small mt-1">
-              Minimum length should be 8 characters.
-            </div>
+          <div class="text-danger small mt-1">
+            Minimum length should be 8 characters.
+          </div>
           }
 
           @else if (
-            signupForm.get('password')?.invalid &&
-            signupForm.get('password')?.touched
+          signupForm.get('password')?.invalid &&
+          signupForm.get('password')?.touched
           ) {
-            <div class="text-danger small mt-1">
-              Password is required.
-            </div>
+          <div class="text-danger small mt-1">
+            Password is required.
+          </div>
           }
 
         </div>
@@ -157,4 +167,4 @@
   </div>
 
 </div>
-```
+
