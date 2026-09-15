@@ -72,7 +72,7 @@ export class ApiTodo implements OnInit, OnDestroy {
               : t
           )
         );
-        this.successfullMessage.set(`successfull update todo: ${result.data.title}`)
+        this.successfullMessage.set(`successfull update ${result.data.title}`)
       },
       error: (err) => {
         this.successfullMessage.set("")
@@ -88,7 +88,7 @@ export class ApiTodo implements OnInit, OnDestroy {
       next: (result) => {
         const { data } = result
         this.todos.update(todos => [...todos, data]);
-        this.successfullMessage.set(`successfull added todo: ${result.data.title}`)
+        this.successfullMessage.set(`successfull added ${result.data.title}`)
       },
       error: (error) => {
         this.successfullMessage.set("")
@@ -109,7 +109,7 @@ export class ApiTodo implements OnInit, OnDestroy {
             t._id !== todo._id
           )
         );
-        this.successfullMessage.set(`successfull deleted todo: ${result.data.title}`)
+        this.successfullMessage.set(`successfull deleted ${result.data.title}`)
       },
       error: (err) => {
         this.successfullMessage.set("")
