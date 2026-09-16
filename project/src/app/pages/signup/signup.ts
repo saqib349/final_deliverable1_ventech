@@ -93,7 +93,6 @@ export class Signup {
 
     this.authService.signupUser(user).subscribe({
       next: (result) => {
-        console.log(result);
         this.router.navigate(['/login']);
       },
 

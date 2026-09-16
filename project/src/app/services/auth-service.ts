@@ -37,7 +37,7 @@ export class AuthService {
         )
     }
     signupUser(user: Omit<User, "role">) {
-        return this.http.post<{ data: User }>("https://final-deliverable1-ventech-o7q6.vercel.app/user/signup", user)
+        return this.http.post("https://final-deliverable1-ventech-o7q6.vercel.app/user/signup", user)
     }
     loginUser(user: Omit<User, "username" | "role">) {
         return this.http.post<{ data: User }>("https://final-deliverable1-ventech-o7q6.vercel.app/user/login", user)

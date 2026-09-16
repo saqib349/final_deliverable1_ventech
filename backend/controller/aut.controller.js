@@ -13,7 +13,7 @@ export async function signup(req, res) {
             password: hashedPassword
         })
         res.status(201).json({
-            data: result
+            message:"successfully signup"
         })
     }
     catch (err) {
@@ -45,8 +45,13 @@ export async function login(req, res) {
             secure: true,
             sameSite: 'none'
         });
+        const newUser={
+            username:user.username,
+            role:user.role,
+            _id:user._id
+        }
         res.json({
-            data: user,
+            data: newUser,
         })
     }
     catch (err) {
@@ -65,6 +70,6 @@ export function logout(req,res){
             sameSite: 'none'
         })
     res.json({
-        message:"successfully login"
+        message:"successfully logout"
     })
 }
