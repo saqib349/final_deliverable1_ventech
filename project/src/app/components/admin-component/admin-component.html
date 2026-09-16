@@ -30,7 +30,7 @@
       </div>
 
       <p class="text-muted mb-0">
-        Loading todos...
+        Loading users...
       </p>
     </div>
     }
@@ -47,9 +47,11 @@
           {{ user.username.charAt(0).toUpperCase() }}
         </div>
 
-        <span>
-          {{ user.username }}
-        </span>
+         <a [routerLink]="['/admin/user',user._id]">
+          <span>
+            {{ user.username }}
+          </span>
+        </a>
 
       </div>
 

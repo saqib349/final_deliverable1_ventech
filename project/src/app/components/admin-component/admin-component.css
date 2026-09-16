@@ -222,6 +222,17 @@
   margin-top: 25px;
 }
 
+.username a {
+  text-decoration: none;
+  color: #1f4e79;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.username a:hover {
+  color: #163a5c;
+  text-decoration: underline;
+}
 
 /* =========================
    Tablet
@@ -240,6 +251,8 @@
   }
 
 }
+
+
 
 
 /* =========================

@@ -2,10 +2,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { UserService } from '../../services/user-service';
 import { FormsModule } from '@angular/forms';
 import { finalize, single } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-component',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './admin-component.html',
   styleUrl: './admin-component.css',
 })

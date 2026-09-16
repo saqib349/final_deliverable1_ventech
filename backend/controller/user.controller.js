@@ -15,6 +15,28 @@ export async function getUsers(req,res){
     }
     
 }
+
+export async function getUserById(req,res){
+    try{
+        const _id=req.params.id
+        const user=await User.findById(_id)
+        if (!user){
+            return res.status(404).json({
+                message:"user not found"
+            })
+        }
+        return res.json({
+            data:user
+        })
+    }
+    catch(err){
+        return res.status(400).json({
+            message:err.message
+        })
+    }
+
+
+}
 export async function deleteUser(req,res){
     try{
         const _id=req.params.id

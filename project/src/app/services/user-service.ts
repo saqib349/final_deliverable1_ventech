@@ -16,5 +16,8 @@ export class UserService {
     updateUser(user:Admin_users){
         return this.http.patch<{data:Admin_users}>(`https://final-deliverable1-ventech-o7q6.vercel.app/admin/user/${user._id}`,user)
     }
+    getUserById(_id:string | null){
+        return this.http.get<{data:Admin_users}>(`http://localhost:8000/admin/user/${_id}`)
+    }
 
 }
