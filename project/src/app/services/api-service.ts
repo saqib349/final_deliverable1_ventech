@@ -22,5 +22,9 @@ export class ApiService {
     updateTodo(id:string,todo:todo){
         return this.http.patch<{data:todo}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/${id}`,todo)
     }
+    searchTodo(searchTerm:string){
+        return this.http.get<{data:todo[]}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/search?searchTerm=${searchTerm}`)
+    }
+
     
 }

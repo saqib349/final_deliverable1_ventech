@@ -33,7 +33,7 @@
 
 
 
-      @else if (filteredTodos().length < 1) { <li class="list-group-item border-0 text-center py-5">
+      @else if (todos().length < 1) { <li class="list-group-item border-0 text-center py-5">
 
         <div class="fs-1 mb-3">
           📝
@@ -55,7 +55,7 @@
 
         <ul class="list-group list-group-flush">
 
-          @for (todo of filteredTodos(); track todo._id) {
+          @for (todo of todos(); track todo._id) {
           <app-todoslist [todo]="todo" (updateTodo)="UpdateStatus($event)" (deleteTodo)="Deletetodo($event)">
           </app-todoslist>
           }

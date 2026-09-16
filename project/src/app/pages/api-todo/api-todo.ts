@@ -3,6 +3,8 @@ import { ApiService } from '../../services/api-service';
 import { Todoslist } from '../../components/todoslist/todoslist';
 import { SearchService } from '../../services/search-service';
 import { AddTodo } from "../../components/add-todo/add-todo";
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { catchError, debounceTime, distinctUntilChanged, EMPTY, skip, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-api-todo',
@@ -27,9 +29,73 @@ export class ApiTodo implements OnInit, OnDestroy {
   searchService = inject(SearchService)
 
   loading = signal(false);
-  errorMessage =signal("")
-  successfullMessage=signal("")
+  errorMessage = signal("")
+  successfullMessage = signal("")
   canRetry = false;
+
+
+  constructor() {
+
+    toObservable(this.searchService.searchTerm)
+      .pipe(
+        skip(1),
+
+        debounceTime(3000),
+
+        distinctUntilChanged(),
+
+        switchMap(search => {
+
+          this.todos.set([]);
+          this.loading.set(true);
+          this.errorMessage.set("");
+          this.successfullMessage.set("");
+          this.canRetry = false;
+
+          const request$ = search
+            ? this.apiService.searchTodo(search)
+            : this.apiService.getTodos();
+
+          return request$.pipe(
+
+            catchError(err => {
+
+              this.loading.set(false);
+
+              if (err.status >= 500 && err.status <= 599) {
+                this.canRetry = true;
+              }
+
+              this.errorMessage.set(
+                err.error?.message || "Something went wrong"
+              );
+
+              return EMPTY;
+            })
+
+          );
+
+        }),
+
+        takeUntilDestroyed()
+
+      )
+
+      .subscribe({
+
+        next: (result) => {
+
+          this.todos.set(result.data);
+
+          this.loading.set(false);
+          this.errorMessage.set("");
+          this.canRetry = false;
+
+        }
+
+      });
+
+  }
 
   loadTodos(): void {
 
@@ -49,7 +115,7 @@ export class ApiTodo implements OnInit, OnDestroy {
         },
 
         error: (err) => {
-          if (err.status>= 500 && err.status <= 600) {
+          if (err.status >= 500 && err.status <= 600) {
             this.canRetry = true
           }
           this.loading.set(false)
@@ -79,7 +145,7 @@ export class ApiTodo implements OnInit, OnDestroy {
         this.errorMessage.set(err.error.message)
       }
     })
-   }
+  }
 
   AddTodo(todo: createTodo) {
     this.errorMessage.set("")
@@ -119,14 +185,7 @@ export class ApiTodo implements OnInit, OnDestroy {
 
   }
 
-  filteredTodos = computed(() => {
-    const search = this.searchService.searchTerm().toLocaleLowerCase()
-
-    const new_array= this.todos().filter(todo =>
-      todo.title.toLowerCase().includes(search)
-    )
-    return new_array.reverse()
-  });
+  
 
 
 

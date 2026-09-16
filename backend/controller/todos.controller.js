@@ -87,4 +87,32 @@ export async function getTodos(req, res) {
         });
     }
 }
+export async function searchTodo(req, res) {
+    try {
+        const searchTerm = req.query.searchTerm?.trim();
+
+        if (!searchTerm) {
+            return res.status(400).json({
+                message: 'Search term is required'
+            });
+        }
+
+        const todos = await Todo.find({
+            userId:req.user._id,
+            title: {
+                $regex: searchTerm,
+                $options: 'i'
+            }
+        });
+
+        res.status(200).json({
+            data: todos
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+        });
+    }
+}
 

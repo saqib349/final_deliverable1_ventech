@@ -10,16 +10,16 @@ import { UserService } from '../../services/user-service';
 })
 export class UserDetailComponent implements OnInit {
   ngOnInit(): void {
-       const _id = this.route.snapshot.paramMap.get('id');
-       this.userService.getUserById(_id).subscribe({
-        next:(result)=>{
-          const {data} = result
-          this.user.set(data)
-        }
-       })
+    const _id = this.route.snapshot.paramMap.get('id');
+    this.userService.getUserById(_id).subscribe({
+      next: (result) => {
+        const { data } = result
+        this.user.set(data)
+      }
+    })
   }
-  private route=inject(ActivatedRoute)
-  userService=inject(UserService)
-  user=signal<Admin_users | null>(null)
-  
+  private route = inject(ActivatedRoute)
+  userService = inject(UserService)
+  user = signal<Admin_users | null>(null)
+
 }
