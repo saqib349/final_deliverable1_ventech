@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators, ɵInternalFormsSharedModule, Reacti
 import { AuthService } from '../../services/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { catchError, EMPTY, exhaustMap, Subject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,8 @@ export class Login {
           })
         );
 
-      })
+      }),
+      takeUntilDestroyed()
     )
     .subscribe({
       next: (result) => {

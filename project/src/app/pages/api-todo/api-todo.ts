@@ -1,5 +1,5 @@
 
-import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api-service';
 import { Todoslist } from '../../components/todoslist/todoslist';
@@ -23,6 +23,7 @@ import {
 })
 export class ApiTodo implements OnDestroy {
 
+  destroyRef=inject(DestroyRef)
   apiService = inject(ApiService);
   searchService = inject(SearchService);
 
@@ -147,7 +148,9 @@ export class ApiTodo implements OnDestroy {
     this.successfullMessage.set("");
     this.canRetry = false;
 
-    this.apiService.getTodos(page, limit).subscribe({
+    this.apiService.getTodos(page, limit).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
 
       next: (result) => {
 
@@ -231,7 +234,9 @@ export class ApiTodo implements OnDestroy {
     this.errorMessage.set("");
     this.successfullMessage.set("");
 
-    this.apiService.updateTodo(newtodo._id, newtodo).subscribe({
+    this.apiService.updateTodo(newtodo._id, newtodo).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
 
       next: (result) => {
 
@@ -268,7 +273,9 @@ export class ApiTodo implements OnDestroy {
   this.errorMessage.set("");
   this.successfullMessage.set("");
 
-  this.apiService.addTodo(todo).subscribe({
+  this.apiService.addTodo(todo).pipe(
+    takeUntilDestroyed(this.destroyRef)
+  ).subscribe({
 
     next: (result) => {
 
@@ -318,7 +325,9 @@ export class ApiTodo implements OnDestroy {
     this.errorMessage.set("");
     this.successfullMessage.set("");
 
-    this.apiService.deleteTodo(id).subscribe({
+    this.apiService.deleteTodo(id).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe({
 
       next: (result) => {
 
