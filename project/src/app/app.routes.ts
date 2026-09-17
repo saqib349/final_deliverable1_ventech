@@ -7,6 +7,7 @@ import { authGuardGuard } from './guards/auth-guard-guard';
 import { Signup } from './pages/signup/signup';
 import { UserDetailComponent } from './components/user-detail-component/user-detail-component';
 import { adminGuard } from './guards/admin-guard';
+import { NotFound } from './components/not-found/not-found';
 
 export const routes: Routes = [
     {
@@ -35,5 +36,9 @@ export const routes: Routes = [
         path: 'admin/user/:id',
         component: UserDetailComponent,
         canActivate: [adminGuard]
+    },
+    {
+        path:"**",
+        component:NotFound
     }
 ];

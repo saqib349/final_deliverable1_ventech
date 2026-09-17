@@ -1,0 +1,112 @@
+:host {
+display: block;
+}
+
+.not-found-page {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 40px 20px;
+background: #f5f7fb;
+font-family: Arial, sans-serif;
+}
+
+.not-found-card {
+width: 100%;
+max-width: 560px;
+text-align: center;
+background: #ffffff;
+padding: 55px 45px;
+border: 1px solid #e5e7eb;
+border-radius: 18px;
+box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+.error-code {
+font-size: 96px;
+line-height: 1;
+font-weight: 800;
+letter-spacing: -5px;
+color: #1f4e79;
+margin-bottom: 18px;
+}
+
+.icon-wrapper {
+width: 52px;
+height: 52px;
+margin: 0 auto 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+background: #eaf4f8;
+border: 1px solid #cfe4eb;
+}
+
+.icon-wrapper span {
+font-size: 25px;
+font-weight: 700;
+color: #1f8a9e;
+}
+
+.not-found-card h1 {
+margin: 0 0 12px;
+font-size: 30px;
+font-weight: 700;
+color: #1f2937;
+}
+
+.not-found-card p {
+max-width: 430px;
+margin: 0 auto 30px;
+font-size: 16px;
+line-height: 1.7;
+color: #6b7280;
+}
+
+.home-btn {
+display: inline-flex;
+align-items: center;
+gap: 9px;
+padding: 12px 22px;
+border-radius: 9px;
+background: #1f4e79;
+color: #ffffff;
+text-decoration: none;
+font-size: 15px;
+font-weight: 600;
+transition: all 0.2s ease;
+}
+
+.home-btn:hover {
+background: #173b5d;
+transform: translateY(-2px);
+box-shadow: 0 7px 18px rgba(31, 78, 121, 0.25);
+}
+
+.home-btn span {
+font-size: 18px;
+}
+
+@media (max-width: 576px) {
+.not-found-page {
+padding: 20px;
+}
+
+.not-found-card {
+padding: 40px 25px;
+}
+
+.error-code {
+font-size: 72px;
+}
+
+.not-found-card h1 {
+font-size: 25px;
+}
+
+.not-found-card p {
+font-size: 15px;
+}
+}
