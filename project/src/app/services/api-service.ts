@@ -8,8 +8,18 @@ export class ApiService {
 
     http = inject(HttpClient)
 
-    getTodos() {
-        return this.http.get<{data: todo[]}>("https://final-deliverable1-ventech-o7q6.vercel.app/todo")
+     getTodos(page: number, limit: number) {
+        return this.http.get<{
+            data: todo[];
+            pagination: {
+                currentPage: number;
+                pageSize: number;
+                totalTodos: number;
+                totalPages: number;
+            };
+        }>(
+            `https://final-deliverable1-ventech-o7q6.vercel.app/todo?page=${page}&limit=${limit}`
+        );
     }
 
     addTodo(todo:createTodo) {
@@ -23,7 +33,15 @@ export class ApiService {
         return this.http.patch<{data:todo}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/${id}`,todo)
     }
     searchTodo(searchTerm:string){
-        return this.http.get<{data:todo[]}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/search?searchTerm=${searchTerm}`)
+        return this.http.get<{
+            data: todo[];
+            pagination: {
+                currentPage: number;
+                pageSize: number;
+                totalTodos: number;
+                totalPages: number;
+            };
+        }>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/search?searchTerm=${searchTerm}`)
     }
 
     

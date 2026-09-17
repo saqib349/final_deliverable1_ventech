@@ -1,78 +1,162 @@
+
 <div class="container py-4">
+
   <app-add-todo (addTodo)="AddTodo($event)"></app-add-todo>
-  <div class="card shadow-sm border-0 mt-4  ">
+
+  <div class="card shadow-sm border-0 mt-4">
 
     <div class="card-header bg-primary text-white">
       <h4 class="mb-0">My api todos</h4>
     </div>
 
     <div class="card-body p-0">
+
       @if (!loading()) {
 
-      @if (errorMessage()) {
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ errorMessage() }}
+        @if (errorMessage()) {
 
-        <button type="button" class="btn-close" aria-label="Close" (click)="errorMessage.set('')">
-        </button>
-      </div>
-      }
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
 
-      @if (successfullMessage()) {
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ successfullMessage() }}
+            {{ errorMessage() }}
 
-        <button type="button" class="btn-close" aria-label="Close" (click)="successfullMessage.set('')">
-        </button>
-      </div>
-      }
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              (click)="errorMessage.set('')">
+            </button>
 
-      @if (canRetry) {
-      <button (click)="loadTodos()">Retry</button>
-      }
+          </div>
 
+        }
 
+        @if (successfullMessage()) {
 
-      @else if (todos().length < 1) { <li class="list-group-item border-0 text-center py-5">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
 
-        <div class="fs-1 mb-3">
-          📝
-        </div>
+            {{ successfullMessage() }}
 
-        <h5 class="fw-semibold text-dark mb-2">
-          No todos yet
-        </h5>
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              (click)="successfullMessage.set('')">
+            </button>
 
-        <p class="text-muted mb-0">
-          You don't have any todos right now.
-          Add one to get started!
-        </p>
+          </div>
 
-        </li>
+        }
+
+        @if (canRetry) {
+
+          <button
+            class="btn btn-primary m-3"
+            (click)="loadTodos(currentPage(), limit())">
+            Retry
+          </button>
+
+        }
+
+        @else if (todos().length < 1) {
+
+          <li class="list-group-item border-0 text-center py-5">
+
+            <div class="fs-1 mb-3">
+              📝
+            </div>
+
+            <h5 class="fw-semibold text-dark mb-2">
+              No todos yet
+            </h5>
+
+            <p class="text-muted mb-0">
+              You don't have any todos right now.
+              Add one to get started!
+            </p>
+
+          </li>
+
         }
 
         @else {
 
-        <ul class="list-group list-group-flush">
+          <ul class="list-group list-group-flush">
 
-          @for (todo of todos(); track todo._id) {
-          <app-todoslist [todo]="todo" (updateTodo)="UpdateStatus($event)" (deleteTodo)="Deletetodo($event)">
-          </app-todoslist>
-          }
+            @for (todo of todos(); track todo._id) {
 
-        </ul>
+              <app-todoslist
+                [todo]="todo"
+                (updateTodo)="UpdateStatus($event)"
+                (deleteTodo)="Deletetodo($event)">
+              </app-todoslist>
+
+            }
+
+          </ul>
+
+
+          <!-- Pagination -->
+
+          <div class="d-flex justify-content-between align-items-center p-3 border-top">
+
+            <!-- Previous -->
+
+            <button
+              class="btn btn-outline-primary"
+              [disabled]="currentPage() === 1"
+              (click)="previousPage()">
+
+              ← Previous
+
+            </button>
+
+
+            <!-- Page Information -->
+
+            <span class="text-muted">
+
+              Page {{ currentPage() }} of {{ totalPages() }}
+
+            </span>
+
+
+            <!-- Next -->
+
+            <button
+              class="btn btn-outline-primary"
+              [disabled]="currentPage() === totalPages()"
+              (click)="nextPage()">
+
+              Next →
+
+            </button>
+
+          </div>
 
         }
 
-        }
-        @else {
+      }
+
+      @else {
 
         <div class="text-center py-5">
-          <div class="spinner-border text-primary mb-3" role="status"></div>
-          <p class="text-muted mb-0">Loading todos...</p>
+
+          <div
+            class="spinner-border text-primary mb-3"
+            role="status">
+          </div>
+
+          <p class="text-muted mb-0">
+            Loading todos...
+          </p>
+
         </div>
 
-        }
+      }
+
     </div>
+
   </div>
+
 </div>
+

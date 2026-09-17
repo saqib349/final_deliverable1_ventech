@@ -74,19 +74,55 @@ export async function updateTodo(req, res) {
     }
 }
 
+// export async function getTodos(req, res) {
+//     try {
+//         const result = await Todo.find({userId:req.user._id});
+//         res.json({
+//             data: result
+//         })
+
+//     } catch (err) {
+//         res.json({
+//             message: err.message
+//         });
+//     }
+// }
+
+// with pagination
 export async function getTodos(req, res) {
     try {
-        const result = await Todo.find({userId:req.user._id});
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 5;
+
+        const skip = (page - 1) * limit;
+
+        const todos = await Todo.find({userId:req.user._id})
+            .skip(skip)
+            .limit(limit);
+
+        const totalTodos = await Todo.countDocuments({
+            userId:req.user._id
+        });
+
+        const totalPages = Math.ceil(totalTodos / limit);
+
         res.json({
-            data: result
-        })
+            data: todos,
+            pagination: {
+                currentPage: page,
+                pageSize: limit,
+                totalTodos,
+                totalPages
+            }
+        });
 
     } catch (err) {
-        res.json({
+        res.status(500).json({
             message: err.message
         });
     }
 }
+
 export async function searchTodo(req, res) {
     try {
         const searchTerm = req.query.searchTerm?.trim();
