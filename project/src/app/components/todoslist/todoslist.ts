@@ -1,10 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-todoslist',
   imports: [],
   templateUrl: './todoslist.html',
   styleUrl: './todoslist.css',
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class Todoslist {
   todo=input<todo>()
