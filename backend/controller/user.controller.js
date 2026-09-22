@@ -86,3 +86,25 @@ export async function updateUser(req,res){
 
 }
 
+export async function addUser(req,res){
+    try{
+        const {username,email,password,role}=req.body
+        const hashedPassword=await hashigPassword(password)
+        const user =await  User.create({
+            username,
+            email,
+            password:hashedPassword,
+            role
+        })
+        res.status(201).json({
+            data:user
+        })
+    }   
+    catch(err){
+        res.status(400).json({
+            message:err.message
+        })
+    }
+
+}
+
