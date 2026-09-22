@@ -4,7 +4,11 @@
   padding: 0 20px;
 }
 
+/* Dashboard Header */
 .dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 25px;
 }
 
@@ -18,9 +22,7 @@
   color: #6c757d;
 }
 
-/* =========================
-   User List
-========================= */
+/* User list */
 
 .user-list {
   background: white;
@@ -66,7 +68,6 @@
 .user-avatar {
   width: 35px;
   height: 35px;
-  min-width: 35px;
   border-radius: 50%;
   background-color: #0d6efd;
   color: white;
@@ -77,20 +78,8 @@
   font-weight: 600;
 }
 
-/* Email */
-
 .email {
   color: #6c757d;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Role */
-
-.role {
-  color: #6c757d;
-  font-weight: 500;
 }
 
 /* Buttons */
