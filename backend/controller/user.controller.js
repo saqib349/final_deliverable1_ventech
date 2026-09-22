@@ -1,4 +1,5 @@
 import User from "../models/User.model.js";
+import { hashigPassword } from "../util/hashing.js";
 
 
 export async function getUsers(req,res){
