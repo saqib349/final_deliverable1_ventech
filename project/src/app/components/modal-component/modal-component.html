@@ -22,7 +22,13 @@
     </div>
 
 
-    <form (ngSubmit)="submit()">
+    <form
+      #userForm="ngForm"
+      (ngSubmit)="submit()"
+      novalidate
+    >
+
+      <!-- Username -->
 
       <div class="form-group">
 
@@ -35,10 +41,32 @@
           type="text"
           [(ngModel)]="user().username"
           name="username"
-          required />
+          required
+          minlength="3"
+          #username="ngModel"
+          [class.input-invalid]="username.invalid && username.touched"
+        />
+
+        @if (username.invalid && username.touched) {
+
+          <div class="validation-error">
+
+            @if (username.errors?.['required']) {
+              <span>Username is required.</span>
+            }
+
+            @if (username.errors?.['minlength']) {
+              <span>Username must be at least 3 characters.</span>
+            }
+
+          </div>
+
+        }
 
       </div>
 
+
+      <!-- Email -->
 
       <div class="form-group">
 
@@ -51,10 +79,32 @@
           type="email"
           [(ngModel)]="user().email"
           name="email"
-          required />
+          required
+          email
+          #email="ngModel"
+          [class.input-invalid]="email.invalid && email.touched"
+        />
+
+        @if (email.invalid && email.touched) {
+
+          <div class="validation-error">
+
+            @if (email.errors?.['required']) {
+              <span>Email is required.</span>
+            }
+
+            @if (email.errors?.['email']) {
+              <span>Please enter a valid email address.</span>
+            }
+
+          </div>
+
+        }
 
       </div>
 
+
+      <!-- Password -->
 
       @if (mode() === 'add') {
 
@@ -69,12 +119,34 @@
             type="password"
             [(ngModel)]="user().password"
             name="password"
-            required />
+            required
+            minlength="6"
+            #password="ngModel"
+            [class.input-invalid]="password.invalid && password.touched"
+          />
+
+          @if (password.invalid && password.touched) {
+
+            <div class="validation-error">
+
+              @if (password.errors?.['required']) {
+                <span>Password is required.</span>
+              }
+
+              @if (password.errors?.['minlength']) {
+                <span>Password must be at least 6 characters.</span>
+              }
+
+            </div>
+
+          }
 
         </div>
 
       }
 
+
+      <!-- Role -->
 
       <div class="form-group">
 
@@ -86,7 +158,14 @@
           id="role"
           [(ngModel)]="user().role"
           name="role"
-          required>
+          required
+          #role="ngModel"
+          [class.input-invalid]="role.invalid && role.touched"
+        >
+
+          <option value="">
+            Select role
+          </option>
 
           <option value="user">
             User
@@ -98,8 +177,18 @@
 
         </select>
 
+        @if (role.invalid && role.touched) {
+
+          <div class="validation-error">
+            Role is required.
+          </div>
+
+        }
+
       </div>
 
+
+      <!-- Actions -->
 
       <div class="modal-actions">
 
@@ -112,10 +201,10 @@
 
         </button>
 
-
         <button
           type="submit"
-          class="btn btn-primary">
+          class="btn btn-primary"
+          [disabled]="userForm.invalid">
 
           @if (mode() === 'add') {
             Add User
