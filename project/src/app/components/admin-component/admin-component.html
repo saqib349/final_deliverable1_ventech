@@ -3,45 +3,99 @@
   <!-- Dashboard Header -->
   <div class="dashboard-header">
 
-    <div>
-      <h2>Admin Dashboard</h2>
-      <p>Manage registered users</p>
+    <div class="header-content">
+      <div class="header-title">
+
+        <div class="header-icon">
+          <i class="fa-solid fa-users"></i>
+        </div>
+
+        <div>
+          <h2>Admin Dashboard</h2>
+          <p>Manage registered users and their account roles.</p>
+        </div>
+
+      </div>
     </div>
 
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-primary add-user-btn"
       (click)="addButton()">
-      + Add User
+
+      <i class="fa-solid fa-user-plus"></i>
+      Add User
+
     </button>
 
   </div>
 
 
+  <!-- Error Alert -->
+  @if (message) {
+
+    <div class="admin-alert alert-danger">
+
+      <div class="alert-icon">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+
+      <div class="alert-content">
+        <strong>Something went wrong</strong>
+        <span>{{ message }}</span>
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- Success Alert -->
+  @if (successMessage) {
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+      {{ successMessage }}
+
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="successMessage=''">
+      </button>
+
+    </div>
+
+  }
+
+
   <!-- User List -->
   <div class="user-list">
 
-    <!-- Header -->
+    <!-- Table Header -->
     <div class="user-row user-header">
+
       <span>Username</span>
       <span>Email</span>
       <span>Role</span>
-      <span>Actions</span>
+      <span class="actions-header">Actions</span>
+
     </div>
 
 
     <!-- Loading -->
     @if (loading()) {
 
-      <div class="text-center py-5">
+      <div class="loading-container">
 
-        <div
-          class="spinner-border text-primary mb-3"
-          role="status">
+        <div class="spinner">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
         </div>
 
-        <p class="text-muted mb-0">
-          Loading users...
+        <h4>Loading users</h4>
+
+        <p>
+          Please wait while we fetch the registered users.
         </p>
 
       </div>
@@ -49,22 +103,27 @@
     }
 
 
-    <!-- Users -->
+    <!-- Loaded -->
     @else {
 
-      <div *ngFor="let user of users(); trackBy: trackById">
+      <!-- Users Found -->
+      @if (filteredUsers().length > 0) {
 
-        <div class="user-row">
+        <div
+          *ngFor="let user of filteredUsers(); trackBy: trackById"
+          class="user-row">
 
           <!-- Username -->
           <div class="username">
 
-            <div class="user-avatar">
-              {{ user.username.charAt(0).toUpperCase() }}
-            </div>
-
             <a [routerLink]="['/admin/user', user._id]">
-              <span>{{ user.username }}</span>
+
+              <div class="user-avatar">
+                {{ user.username.charAt(0).toUpperCase() }}
+              </div>
+
+              {{ user.username }}
+
             </a>
 
           </div>
@@ -77,8 +136,14 @@
 
 
           <!-- Role -->
-          <span class="role">
+          <span
+            class="role"
+            [class.role-admin]="user.role === 'admin'"
+            [class.role-provider]="user.role === 'provider'"
+            [class.role-user]="user.role === 'user'">
+
             {{ user.role }}
+
           </span>
 
 
@@ -89,21 +154,77 @@
               type="button"
               class="btn btn-sm btn-outline-primary"
               (click)="EditUser(user)">
+
+              <i class="fa-solid fa-pen-to-square"></i>
               Edit
+
             </button>
+
 
             <button
               type="button"
               class="btn btn-sm btn-outline-danger"
               (click)="DeleteUser(user._id)">
+
+              <i class="fa-solid fa-trash"></i>
               Delete
+
             </button>
 
           </div>
 
         </div>
 
-      </div>
+      }
+
+
+      <!-- Empty State -->
+      @else {
+
+        <div class="empty-state">
+
+          @if (users().length === 0) {
+
+            <div class="empty-icon">
+              <i class="fa-solid fa-users-slash"></i>
+            </div>
+
+            <h4>No users found</h4>
+
+            <p>
+              There are currently no registered users in the system.
+            </p>
+
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="addButton()">
+
+              <i class="fa-solid fa-user-plus"></i>
+              Add First User
+
+            </button>
+
+          }
+
+          @else {
+
+            <div class="empty-icon">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <h4>No matching users</h4>
+
+            <p>
+              No users match your current search.
+              Try searching with a different username.
+            </p>
+
+          }
+
+        </div>
+
+      }
 
     }
 

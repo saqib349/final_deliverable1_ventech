@@ -1,10 +1,11 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { UserService } from '../../services/user-service';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../modal-component/modal-component';
+import { SearchService } from '../../services/search-service';
 
 @Component({
   selector: 'app-admin-component',
@@ -12,14 +13,20 @@ import { ModalComponent } from '../modal-component/modal-component';
   templateUrl: './admin-component.html',
   styleUrl: './admin-component.css',
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit,OnDestroy {
+  ngOnDestroy(): void {
+    this.searchService.searchTerm.set('')
+  }
 
   users = signal<Array<Admin_users>>([]);
 
   message = '';
+  successMessage=''
   loading = signal(false)
   userService = inject(UserService);
+  searchService=inject(SearchService)
   modalMode = signal<'add' | 'edit'>('edit');
+
 
   showEditModal = signal(false);
 
@@ -55,6 +62,14 @@ export class AdminComponent implements OnInit {
 
   }
 
+  filteredUsers=computed(()=>{
+      let searchKeyWord=this.searchService.searchTerm().toLocaleLowerCase()
+      return this.users().filter(user=>
+        user.username.toLowerCase().includes(searchKeyWord) 
+      )
+  })
+
+  
 
   DeleteUser(_id: string) {
 
@@ -65,10 +80,12 @@ export class AdminComponent implements OnInit {
         this.users.update(users =>
           users.filter(user => user._id !== _id)
         );
+        this.successMessage='user successfully deleted'
 
       },
 
       error: (err) => {
+        this.successMessage=''
         this.message = err.error.message;
       }
 
@@ -80,6 +97,7 @@ export class AdminComponent implements OnInit {
   EditUser(user: Admin_users) {
 
     // Copy selected user's data into editUser
+    this.successMessage=''
     this.editUser = {
       _id: user._id,
       password: user.password,
@@ -115,10 +133,11 @@ export class AdminComponent implements OnInit {
 
         // Close modal after successful update
         this.closeEditModal();
+        this.successMessage='user successfully updated'
       },
 
       error: (err) => {
-
+        this.successMessage=''
         this.message = err.error.message;
 
       }
@@ -144,7 +163,7 @@ export class AdminComponent implements OnInit {
   }
   addButton() {
 
-    // Copy selected user's data into editUser
+    this.successMessage=''
     this.editUser = {
       _id: '',
       password: '',
@@ -166,10 +185,12 @@ export class AdminComponent implements OnInit {
         console.log("added user: ", data)
         this.users.update(users => [...users, data]);
         this.closeEditModal();
-        this.modalMode.set('edit')
+        this.successMessage='user successfully added'
+
       },
 
       error: (err) => {
+        this.successMessage=''
         this.message = err.error.message;
       }
 
@@ -187,5 +208,7 @@ export class AdminComponent implements OnInit {
   trackById(index: number, user: Admin_users) {
     return user._id;
   }
+
+  
 
 }
