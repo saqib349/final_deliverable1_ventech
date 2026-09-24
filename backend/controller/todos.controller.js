@@ -3,10 +3,14 @@ import Todo from "../models/todos.model.js";
 export async function addTodo(req, res) {
     try {
         const userId = req.user._id
-        const { title, completed } = req.body
+        console.log(userId)
+        const { title, description, priority, dueDate, completed } = req.body
         const result = await Todo.create({
             userId,
             title,
+            description,
+            priority,
+            dueDate,
             completed,
 
         })
@@ -14,7 +18,7 @@ export async function addTodo(req, res) {
         return res.status(201).json({
             data: result
         })
-        
+
     }
     catch (err) {
         res.status(400).json({
@@ -27,15 +31,16 @@ export async function addTodo(req, res) {
 export async function deleteTodo(req, res) {
     try {
         const _id = req.params.id
-        const todo =await Todo.findByIdAndDelete(_id)
+        console.log(_id)
+        const todo = await Todo.findByIdAndDelete(_id)
         console.log(todo)
         if (!todo) {
             return res.status(404).json({
-                message: "todo not found with this id"
+                message: "user not found with this id"
             })
         }
         return res.status(200).json({
-            data:todo
+            data: todo
         })
     }
     catch (err) {
@@ -48,13 +53,20 @@ export async function deleteTodo(req, res) {
 
 export async function updateTodo(req, res) {
     try {
-        const { title, completed } = req.body;
+        const { title, description, priority, dueDate, completed } = req.body;
         const _id = req.params.id;
+
+        const updateData = {};
+        if (title !== undefined) updateData.title = title;
+        if (description !== undefined) updateData.description = description;
+        if (priority !== undefined) updateData.priority = priority;
+        if (dueDate !== undefined) updateData.dueDate = dueDate;
+        if (completed !== undefined) updateData.completed = completed;
 
         const todo = await Todo.findByIdAndUpdate(
             _id,
-            { title, completed },
-            { returnDocument: 'after' }
+            updateData,
+            { returnDocument: 'after', runValidators: true }
         );
 
         if (!todo) {
@@ -80,6 +92,7 @@ export async function updateTodo(req, res) {
 //         res.json({
 //             data: result
 //         })
+//         console.log(result)
 
 //     } catch (err) {
 //         res.json({
@@ -88,7 +101,6 @@ export async function updateTodo(req, res) {
 //     }
 // }
 
-// with pagination
 export async function getTodos(req, res) {
     try {
         const page = Number(req.query.page) || 1;
@@ -96,12 +108,12 @@ export async function getTodos(req, res) {
 
         const skip = (page - 1) * limit;
 
-        const todos = await Todo.find({userId:req.user._id})
+        const todos = await Todo.find({ userId: req.user._id })
             .skip(skip)
             .limit(limit);
 
         const totalTodos = await Todo.countDocuments({
-            userId:req.user._id
+            userId: req.user._id
         });
 
         const totalPages = Math.ceil(totalTodos / limit);
@@ -123,6 +135,7 @@ export async function getTodos(req, res) {
     }
 }
 
+
 export async function searchTodo(req, res) {
     try {
         const searchTerm = req.query.searchTerm?.trim();
@@ -134,7 +147,7 @@ export async function searchTodo(req, res) {
         }
 
         const todos = await Todo.find({
-            userId:req.user._id,
+            userId: req.user._id,
             title: {
                 $regex: searchTerm,
                 $options: 'i'
@@ -151,4 +164,3 @@ export async function searchTodo(req, res) {
         });
     }
 }
-

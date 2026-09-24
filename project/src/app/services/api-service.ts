@@ -43,6 +43,8 @@ export class ApiService {
             };
         }>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/search?searchTerm=${searchTerm}`)
     }
-
+    generateTodo(prompt: string) {
+        return this.http.post<aiGenerateRes>("https://final-deliverable1-ventech-o7q6.vercel.app/ai/generate-todo", { prompt });
+    }
     
 }

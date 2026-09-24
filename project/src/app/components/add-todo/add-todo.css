@@ -1,0 +1,193 @@
+/* =========================================
+   Add Todo Form
+========================================= */
+
+.add-todo-card {
+    width: 100%;
+    height: 100%;
+
+    margin-top: 0 !important;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb !important;
+    border-radius: 14px;
+
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+}
+
+
+/* =========================================
+   Header
+========================================= */
+
+.add-todo-card .card-header {
+    padding: 17px 22px;
+
+    background: #0d6efd !important;
+
+    border: 0;
+}
+
+.add-todo-card .card-header h4 {
+    font-size: 19px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   Body
+========================================= */
+
+.add-todo-card .card-body {
+    padding: 24px 26px;
+}
+
+
+/* =========================================
+   Labels
+========================================= */
+
+.add-todo-card .form-label,
+.add-todo-card legend {
+    color: #343a40;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   Inputs
+========================================= */
+
+.add-todo-card .form-control,
+.add-todo-card .form-select {
+
+    min-height: 44px;
+
+    padding: 9px 12px;
+
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.add-todo-card textarea.form-control {
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+
+/* Focus */
+
+.add-todo-card .form-control:focus,
+.add-todo-card .form-select:focus {
+
+    border-color: #86b7fe;
+
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+
+/* Placeholder */
+
+.add-todo-card .form-control::placeholder {
+    color: #adb5bd;
+}
+
+
+/* =========================================
+   Status
+========================================= */
+
+.add-todo-card fieldset {
+    padding-top: 2px;
+}
+
+.add-todo-card .form-check {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+}
+
+.add-todo-card .form-check-input {
+    width: 17px;
+    height: 17px;
+
+    margin-top: 0;
+
+    cursor: pointer;
+}
+
+.add-todo-card .form-check-label {
+    color: #495057;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================
+   Submit
+========================================= */
+
+.add-todo-card button[type="submit"] {
+
+    min-width: 125px;
+
+    padding: 10px 20px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.add-todo-card button[type="submit"]:not(:disabled):hover {
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+
+/* =========================================
+   Validation
+========================================= */
+
+.add-todo-card .invalid-feedback {
+    font-size: 12px;
+}
+
+
+/* =========================================
+   Mobile
+========================================= */
+
+@media (max-width: 576px) {
+
+    .add-todo-card .card-body {
+        padding: 20px 17px;
+    }
+
+    .add-todo-card .card-header {
+        padding: 15px 17px;
+    }
+
+}

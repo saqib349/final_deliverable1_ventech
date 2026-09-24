@@ -7,6 +7,7 @@ import { authMiddleware, authorizationMiddleWare } from './middlewares/auth.midd
 import cookieParser from 'cookie-parser'
 import userRouter from './routes/user.router.js'
 import dotenv from "dotenv"
+import aiRouter from './routes/ai.router.js'
 dotenv.config()
 
 const app = express()
@@ -34,6 +35,7 @@ app.get("/",(req,res)=>{
 // initial routes should be plural like todos,users etc
 app.use("/todo",authMiddleware,todoRouter)
 app.use("/user",authRouter)
+app.use('/ai',authMiddleware,aiRouter)
 app.use("/admin/user",authMiddleware,authorizationMiddleWare,userRouter)
 // app.use('/user',authRouter)
 // app.get('/login',(req,res)=>{

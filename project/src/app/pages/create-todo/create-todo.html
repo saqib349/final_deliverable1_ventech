@@ -1,0 +1,65 @@
+<div class="container py-4">
+
+    <!-- Success Message -->
+    @if (successfullMessage()) {
+    <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+
+        <div class="d-flex align-items-center gap-2">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <span>
+                {{ successfullMessage() }}
+            </span>
+
+        </div>
+
+        <button type="button" class="btn-close" aria-label="Close" (click)="successfullMessage.set('')">
+        </button>
+
+    </div>
+    }
+
+
+    <!-- Error Message -->
+    @if (errorMessage()) {
+    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+
+        <div class="d-flex align-items-center gap-2">
+
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            <span>
+                {{ errorMessage() }}
+            </span>
+
+        </div>
+
+        <button type="button" class="btn-close" aria-label="Close" (click)="errorMessage.set('')">
+        </button>
+
+    </div>
+    }
+
+
+    <!-- Create Todo -->
+    <div class="todo-creation-layout">
+
+        <div class="ai-section">
+
+            <app-ai-todo-assistant (todoGenerated)="aiGeneratedTodo.set($event)">
+            </app-ai-todo-assistant>
+
+        </div>
+
+
+        <div class="form-section">
+
+            <app-add-todo [aiTodoData]="aiGeneratedTodo()" (addTodo)="AddTodo($event)">
+            </app-add-todo>
+
+        </div>
+
+    </div>
+
+</div>

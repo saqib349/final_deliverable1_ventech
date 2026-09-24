@@ -1,0 +1,83 @@
+/* =========================================
+   Todo Creation Area
+========================================= */
+
+.todo-creation-layout {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.8fr) minmax(0, 1.2fr);
+    gap: 24px;
+    align-items: stretch;
+}
+
+
+/* AI side */
+
+.ai-section {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Add Todo side */
+
+.form-section {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+app-ai-todo-assistant,
+app-add-todo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+}
+
+
+/* =========================================
+   Desktop
+========================================= */
+
+@media (min-width: 992px) {
+
+    .todo-creation-layout {
+        align-items: stretch;
+    }
+
+    .ai-card,
+    .add-todo-card {
+        width: 100%;
+        height: 100%;
+        margin-top: 0 !important;
+    }
+
+}
+
+
+/* =========================================
+   Tablet
+========================================= */
+
+@media (max-width: 991px) {
+
+    .todo-creation-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+}
+
+
+/* =========================================
+   Mobile
+========================================= */
+
+@media (max-width: 576px) {
+
+    .todo-creation-layout {
+        gap: 16px;
+    }
+
+}

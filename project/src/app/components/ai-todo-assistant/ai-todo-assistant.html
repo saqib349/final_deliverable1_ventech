@@ -1,0 +1,65 @@
+<div class="card shadow-sm border-0 mt-4 ai-card">
+    <!-- Header -->
+    <div class="card-header bg-gradient-ai text-white d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+            <span class="fs-4">✨</span>
+            <h4 class="mb-0 fw-semibold">AI Todo Assistant</h4>
+        </div>
+        <span class="badge bg-light text-dark font-monospace px-2 py-1">Powered by LLM</span>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body">
+        <p class="text-muted small mb-3">
+            Describe what you need to do in plain English (e.g. <em>"Prepare for my Angular interview next Friday, very
+                important"</em>). The AI will auto-populate the Todo form below.
+        </p>
+
+        <!-- Error Alert -->
+        @if (aiError()) {
+        <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+            {{ aiError() }}
+            <button type="button" class="btn-close" aria-label="Close" (click)="aiError.set('')"></button>
+        </div>
+        }
+
+        <!-- Success Info -->
+        @if (aiGenerated() && !aiLoading()) {
+        <div class="alert alert-info d-flex align-items-center gap-2 mb-3">
+            <span>✓</span>
+            <div>
+                <strong>AI Todo Generated!</strong> Review and edit the populated fields in the <strong>Add
+                    Todo</strong> form below before creating.
+            </div>
+        </div>
+        }
+
+        <!-- Textarea Prompt Input -->
+        <div class="mb-3">
+            <label for="aiPrompt" class="form-label fw-semibold">Describe what you need to do</label>
+            <textarea id="aiPrompt" class="form-control" rows="3"
+                placeholder="e.g. Clean the garage this Saturday and buy storage boxes." [ngModel]="prompt()"
+                (ngModelChange)="prompt.set($event)" [disabled]="aiLoading()"></textarea>
+        </div>
+
+        <!-- Actions -->
+        <div class="d-flex justify-content-end gap-2">
+            @if (aiGenerated()) {
+            <button type="button" class="btn btn-outline-secondary" (click)="regenerateTodo()"
+                [disabled]="aiLoading() || !prompt().trim()">
+                🔄 Regenerate
+            </button>
+            }
+
+            <button type="button" class="btn btn-primary bg-gradient-ai border-0 px-4" (click)="generateTodo()"
+                [disabled]="aiLoading() || !prompt().trim()">
+                @if (aiLoading()) {
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Generating...
+                } @else {
+                ✨ {{ aiGenerated() ? 'Generate Again' : 'Generate Todo' }}
+                }
+            </button>
+        </div>
+    </div>
+</div>

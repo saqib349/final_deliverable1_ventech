@@ -8,6 +8,8 @@ import { Signup } from './pages/signup/signup';
 import { UserDetailComponent } from './components/user-detail-component/user-detail-component';
 import { adminGuard } from './guards/admin-guard';
 import { NotFound } from './components/not-found/not-found';
+import { About } from './pages/about/about';
+import { CreateTodo } from './pages/create-todo/create-todo';
 
 export const routes: Routes = [
     {
@@ -17,6 +19,15 @@ export const routes: Routes = [
     {
         path: "listTodo",
         component: ListTodo,
+        canActivate: [authGuardGuard]
+    },
+    {
+        path: "about",
+        component: About
+    },
+    {
+        path: "createTodo",
+        component: CreateTodo,
         canActivate: [authGuardGuard]
     },
     {
