@@ -1,21 +1,21 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-todoslist',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './todoslist.html',
   styleUrl: './todoslist.css',
-  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class Todoslist {
-  todo=input<todo>()
-  updateTodo=output<todo | undefined>()
-  deleteTodo=output<todo | undefined>()
+  todo = input<todo>()
+  updateTodo = output<todo | undefined>()
+  deleteTodo = output<todo | undefined>()
 
-  updateStatus(){
+  updateStatus() {
     this.updateTodo.emit(this.todo())
   }
-  deletetodo(){
+  deletetodo() {
     this.deleteTodo.emit(this.todo())
   }
 

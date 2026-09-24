@@ -1,31 +1,39 @@
-<li
-  class="list-group-item d-flex align-items-center gap-3 py-3 px-3"
-  [class.completed]="todo()?.completed"
->
+<li class="list-group-item d-flex align-items-center gap-3 py-3 px-3" [class.completed]="todo()?.completed">
   <!-- Checkbox -->
-  <input
-    class="form-check-input mt-0"
-    type="checkbox"
-    [checked]="todo()?.completed"
-    [id]="'todo-' + todo()?._id"
-    (change)="updateStatus()"
-  />
+  <input class="form-check-input mt-0" type="checkbox" [checked]="todo()?.completed" [id]="'todo-' + todo()?._id"
+    (change)="updateStatus()" />
 
-  <!-- Todo title -->
-  <label
-    class="form-check-label flex-grow-1"
-    [for]="'todo-' + todo()?._id"
-  >
-    {{ todo()?.title }}
-  </label>
+  <!-- Todo content -->
+  <div class="flex-grow-1">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+      <label class="form-check-label fw-medium mb-0" [for]="'todo-' + todo()?._id">
+        {{ todo()?.title }}
+      </label>
+
+      @if (todo()?.priority) {
+      <span class="badge text-capitalize" [class.bg-danger]="todo()?.priority === 'high'"
+        [class.bg-warning]="todo()?.priority === 'medium'" [class.text-dark]="todo()?.priority === 'medium'"
+        [class.bg-secondary]="todo()?.priority === 'low'">
+        {{ todo()?.priority }}
+      </span>
+      }
+
+      @if (todo()?.dueDate) {
+      <span class="badge bg-light text-dark border ms-1">
+        📅 {{ todo()?.dueDate | date:'mediumDate' }}
+      </span>
+      }
+    </div>
+
+    @if (todo()?.description) {
+    <p class="text-muted small mb-0 mt-1">
+      {{ todo()?.description }}
+    </p>
+    }
+  </div>
 
   <!-- Delete button -->
-  <button
-    type="button"
-    class="btn btn-sm btn-outline-danger"
-    [disabled]="todo()?.completed"
-    (click)="deletetodo()"
-  >
+  <button type="button" class="btn btn-sm btn-outline-danger" [disabled]="todo()?.completed" (click)="deletetodo()">
     <i class="bi bi-trash"></i>
     Delete
   </button>
