@@ -1,4 +1,8 @@
 .completed{
     text-decoration: line-through;
+    
+}
+
+.completedColor{
     background-color: aquamarine;
 }

@@ -1,10 +1,10 @@
-<li class="list-group-item d-flex align-items-center gap-3 py-3 px-3" [class.completed]="todo()?.completed">
+<li class="list-group-item d-flex align-items-center gap-3 py-3 px-3" [class.completedColor]="todo()?.completed">
   <!-- Checkbox -->
   <input class="form-check-input mt-0" type="checkbox" [checked]="todo()?.completed" [id]="'todo-' + todo()?._id"
     (change)="updateStatus()" />
 
   <!-- Todo content -->
-  <div class="flex-grow-1">
+  <div class="flex-grow-1" [class.completed]="todo()?.completed">
     <div class="d-flex align-items-center gap-2 flex-wrap">
       <label class="form-check-label fw-medium mb-0" [for]="'todo-' + todo()?._id">
         {{ todo()?.title }}
@@ -33,7 +33,7 @@
   </div>
 
   <!-- Delete button -->
-  <button type="button" class="btn btn-sm btn-outline-danger" [disabled]="todo()?.completed" (click)="deletetodo()">
+  <button type="button" class="btn btn-sm btn-outline-danger" (click)="deletetodo()">
     <i class="bi bi-trash"></i>
     Delete
   </button>
