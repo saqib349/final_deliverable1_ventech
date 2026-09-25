@@ -22,7 +22,6 @@ export async function generateTodo(req, res) {
 
         let parsed;
         try {
-            // Clean up possible markdown code block wrappers (e.g., ```json ... ```)
             let cleanResponse = rawResponse.trim();
             if (cleanResponse.startsWith("```")) {
                 cleanResponse = cleanResponse.replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "").trim();
@@ -35,13 +34,10 @@ export async function generateTodo(req, res) {
             });
         }
 
-        // Validate and sanitize title
         let title = typeof parsed.title === "string" && parsed.title.trim() ? parsed.title.trim() : prompt.trim();
 
-        // Validate and sanitize description
         let description = typeof parsed.description === "string" ? parsed.description.trim() : "";
 
-        // Validate priority enum ("low", "medium", "high")
         let priority = "medium";
         if (typeof parsed.priority === "string") {
             const lowerPriority = parsed.priority.toLowerCase().trim();
@@ -50,10 +46,8 @@ export async function generateTodo(req, res) {
             }
         }
 
-        // Validate completed boolean
         let completed = typeof parsed.completed === "boolean" ? parsed.completed : false;
 
-        // Validate dueDate
         let dueDate = null;
         if (parsed.dueDate && parsed.dueDate !== "null" && typeof parsed.dueDate === "string") {
             const parsedDate = new Date(parsed.dueDate);
