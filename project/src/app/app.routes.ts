@@ -17,6 +17,11 @@ export const routes: Routes = [
         component: Main,
     },
     {
+        path: "home",
+        redirectTo : "",
+        pathMatch : 'full'
+    },
+    {
         path: "listTodo",
         component: ListTodo,
         canActivate: [authGuardGuard]
