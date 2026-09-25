@@ -1,0 +1,21 @@
+.faq-container {
+  max-width: 850px;
+}
+
+.accordion-item {
+  overflow: hidden;
+}
+
+.accordion-button {
+  font-weight: 600;
+  padding: 1.1rem 1.25rem;
+}
+
+.accordion-button:not(.collapsed) {
+  box-shadow: none;
+}
+
+.accordion-body {
+  line-height: 1.7;
+  padding: 0 1.25rem 1.25rem;
+}

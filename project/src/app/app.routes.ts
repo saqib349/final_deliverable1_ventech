@@ -10,6 +10,7 @@ import { adminGuard } from './guards/admin-guard';
 import { NotFound } from './components/not-found/not-found';
 import { About } from './pages/about/about';
 import { CreateTodo } from './pages/create-todo/create-todo';
+import { Faq } from './pages/faq/faq';
 
 export const routes: Routes = [
     {
@@ -39,6 +40,10 @@ export const routes: Routes = [
         path: "apiTodo",
         component: ApiTodo,
         canActivate: [authGuardGuard]
+    },
+    {
+        path: "faq",
+        component: Faq
     },
     {
         path: "login",
