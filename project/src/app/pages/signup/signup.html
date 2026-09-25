@@ -171,16 +171,24 @@
         </div>
 
         <!-- Signup -->
-        <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm" [disabled]="signupForm.invalid">
+        <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm"
+          [disabled]="signupForm.invalid || loading()">
+          @if (loading()) {
+          <span class="spinner-border spinner-border-sm me-2" aria-hidden="true">
+          </span>
+          Signing Up...
+          }
+          @else {
           Sign Up
+          }
         </button>
 
       </form>
 
 
-      @if (errorMessage) {
+      @if (errorMessage()) {
       <div class="text-danger small mt-2">
-        {{ errorMessage }}
+        {{ errorMessage() }}
       </div>
       }
 

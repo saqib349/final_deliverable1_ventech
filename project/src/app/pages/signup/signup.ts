@@ -38,8 +38,8 @@ export class Signup {
 
   router = inject(Router);
   authService = inject(AuthService);
-
-  errorMessage = "";
+  loading=signal(false)
+  errorMessage=signal('');
 
   showPassword = signal(false);
 
@@ -90,13 +90,16 @@ export class Signup {
       email: this.signupForm.controls.email.value,
       password: this.signupForm.controls.password.value
     };
-
+    this.errorMessage.set('')
+    this.loading.set(true)
     this.authService.signupUser(user).subscribe({
       next: (result) => {
         this.router.navigate(['/login']);
+        this.loading.set(false)
       },
 
       error: (err) => {
+        this.loading.set(false)
         this.errorMessage = err.error.message;
       }
     });
