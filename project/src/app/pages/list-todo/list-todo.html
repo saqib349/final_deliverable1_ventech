@@ -1,29 +1,68 @@
+
 <div class="container py-4">
 
-  <ng-template #showItems>
-    <div class="card shadow-sm border-0 rounded-3 mt-4">
+  <div class="text-center mb-4">
 
-      <!-- Header -->
+    <h2 class="fw-bold mb-2">
+      Explore TaskFlow
+    </h2>
+
+    <p class="text-muted mb-2">
+      Try out the todo management features using these sample tasks.
+    </p>
+
+    <small class="text-muted">
+      <i class="bi bi-info-circle me-1"></i>
+      You can mark tasks as complete, update them, or delete them to see how TaskFlow works.
+    </small>
+
+  </div>
+
+
+  <ng-template #showItems>
+
+    <div class="card shadow-sm border-0 rounded-3">
+
       <div class="card-header bg-primary text-white py-3">
-        <h4 class="mb-0 fw-semibold">
-          📝 My Todos
-        </h4>
+
+        <div class="d-flex align-items-center gap-2">
+
+          <i class="bi bi-card-checklist fs-5"></i>
+
+          <div>
+            <h4 class="mb-0 fw-semibold">
+              Demo Todos
+            </h4>
+
+            <small class="opacity-75">
+              Sample tasks to explore todo management
+            </small>
+          </div>
+
+        </div>
+
       </div>
+
 
       <div class="card-body p-0">
 
         <!-- Loading -->
         @if (loading) {
+
         <div class="text-center py-5">
+
           <div
             class="spinner-border text-primary mb-3"
-            role="status">
+            role="status"
+            aria-hidden="true">
           </div>
 
           <p class="text-muted mb-0">
-            Loading todos...
+            Loading demo todos...
           </p>
+
         </div>
+
         }
 
         @else {
@@ -33,6 +72,7 @@
 
           <!-- Empty State -->
           @if (filteredTodos().length < 1) {
+
           <li class="list-group-item border-0 text-center py-5">
 
             <div class="fs-1 mb-3">
@@ -40,35 +80,40 @@
             </div>
 
             <h5 class="fw-semibold text-dark mb-2">
-              No todos yet
+              No demo todos available
             </h5>
 
             <p class="text-muted mb-0">
-              You don't have any todos right now.
-              Add one to get started!
+              There are currently no sample tasks to display.
             </p>
 
           </li>
+
           }
+
 
           <!-- Todos -->
           @for (todo of filteredTodos(); track todo._id) {
+
           <app-todoslist
             [todo]="todo"
             (updateTodo)="updateStatus($event)"
             (deleteTodo)="deletetodo($event)">
           </app-todoslist>
+
           }
 
         </ul>
+
         }
 
       </div>
+
     </div>
+
   </ng-template>
 
 
-  
   <ng-container [ngTemplateOutlet]="showItems">
   </ng-container>
 
