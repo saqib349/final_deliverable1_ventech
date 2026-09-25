@@ -12,12 +12,12 @@ export async function signup(req, res) {
             email,
             password: hashedPassword
         })
-        res.status(201).json({
+        return res.status(201).json({
             message:"successfully signup"
         })
     }
     catch (err) {
-        res.status(400).json({
+        return res.status(400).json({
             message: err.message
         })
     }
@@ -50,12 +50,12 @@ export async function login(req, res) {
             role:user.role,
             _id:user._id
         }
-        res.json({
+        return res.json({
             data: newUser,
         })
     }
     catch (err) {
-        res.status(500).json({
+        return res.status(500).json({
             message: err.message
         })
     }
@@ -64,12 +64,12 @@ export async function login(req, res) {
 
 export function logout(req,res){
     console.log(req.cookies.token)
-    res.clearCookie("token",{
+     res.clearCookie("token",{
             httpOnly: true,
             secure: true,
             sameSite: 'none'
         })
-    res.json({
+    return res.json({
         message:"successfully logout"
     })
 }

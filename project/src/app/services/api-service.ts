@@ -18,19 +18,19 @@ export class ApiService {
                 totalPages: number;
             };
         }>(
-            `https://final-deliverable1-ventech-o7q6.vercel.app/todo?page=${page}&limit=${limit}`
+            `https://final-deliverable1-ventech-o7q6.vercel.app/todos?page=${page}&limit=${limit}`
         );
     }
 
     addTodo(todo:createTodo) {
-        return this.http.post<{data:todo}>("https://final-deliverable1-ventech-o7q6.vercel.app/todo",todo)
+        return this.http.post<{data:todo}>("https://final-deliverable1-ventech-o7q6.vercel.app/todos",todo)
     }
 
     deleteTodo(id:string){
-        return this.http.delete<{data:todo}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/${id}`)
+        return this.http.delete<{data:todo}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todos/${id}`)
     }
     updateTodo(id:string,todo:todo){
-        return this.http.patch<{data:todo}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/${id}`,todo)
+        return this.http.patch<{data:todo}>(`https://final-deliverable1-ventech-o7q6.vercel.app/todos/${id}`,todo)
     }
     searchTodo(searchTerm:string){
         return this.http.get<{
@@ -41,7 +41,7 @@ export class ApiService {
                 totalTodos: number;
                 totalPages: number;
             };
-        }>(`https://final-deliverable1-ventech-o7q6.vercel.app/todo/search?searchTerm=${searchTerm}`)
+        }>(`https://final-deliverable1-ventech-o7q6.vercel.app/todos/search?searchTerm=${searchTerm}`)
     }
     generateTodo(prompt: string) {
         return this.http.post<aiGenerateRes>("https://final-deliverable1-ventech-o7q6.vercel.app/ai/generate-todo", { prompt });

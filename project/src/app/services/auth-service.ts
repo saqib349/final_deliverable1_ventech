@@ -28,7 +28,7 @@ export class AuthService {
 
     logoutUser() {
         console.log("hello in the logoutUser")
-        return this.http.post("https://final-deliverable1-ventech-o7q6.vercel.app/user/logout", {}).pipe(
+        return this.http.post("https://final-deliverable1-ventech-o7q6.vercel.app/auth/logout", {}).pipe(
             tap(() => {
                 this.isAuthenticated.set(false);
                 this.username.set("")
@@ -37,9 +37,9 @@ export class AuthService {
         )
     }
     signupUser(user: Omit<User, "role">) {
-        return this.http.post("https://final-deliverable1-ventech-o7q6.vercel.app/user/signup", user)
+        return this.http.post("https://final-deliverable1-ventech-o7q6.vercel.app/auth/signup", user)
     }
     loginUser(user: Omit<User, "username" | "role">) {
-        return this.http.post<{ data: User }>("https://final-deliverable1-ventech-o7q6.vercel.app/user/login", user)
+        return this.http.post<{ data: User }>("https://final-deliverable1-ventech-o7q6.vercel.app/auth/login", user)
     }
 } 

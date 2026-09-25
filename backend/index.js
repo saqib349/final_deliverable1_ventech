@@ -19,7 +19,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.get("/auth/me",authMiddleware,(req,res)=>{
-        res.json({
+        return res.json({
             data:req.user
         })
 })
@@ -27,16 +27,16 @@ app.get("/auth/me",authMiddleware,(req,res)=>{
 
 // response should be return like: return res.json()
 app.get("/",(req,res)=>{
-    res.json({
+    return res.json({
         message:"heello "
     })
 })
 
 // initial routes should be plural like todos,users etc
-app.use("/todo",authMiddleware,todoRouter)
-app.use("/user",authRouter)
+app.use("/todos",authMiddleware,todoRouter)
+app.use("/auth",authRouter)
 app.use('/ai',authMiddleware,aiRouter)
-app.use("/admin/user",authMiddleware,authorizationMiddleWare,userRouter)
+app.use("/admin/users",authMiddleware,authorizationMiddleWare,userRouter)
 // app.use('/user',authRouter)
 // app.get('/login',(req,res)=>{
 //     res.render("login")

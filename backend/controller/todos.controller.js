@@ -14,7 +14,6 @@ export async function addTodo(req, res) {
             completed,
 
         })
-        console.log(result)
         return res.status(201).json({
             data: result
         })
@@ -118,7 +117,7 @@ export async function getTodos(req, res) {
 
         const totalPages = Math.ceil(totalTodos / limit);
 
-        res.json({
+        return res.json({
             data: todos,
             pagination: {
                 currentPage: page,
@@ -129,7 +128,7 @@ export async function getTodos(req, res) {
         });
 
     } catch (err) {
-        res.status(500).json({
+        return res.status(500).json({
             message: err.message
         });
     }
@@ -154,12 +153,12 @@ export async function searchTodo(req, res) {
             }
         });
 
-        res.status(200).json({
+        return res.status(200).json({
             data: todos
         });
 
     } catch (err) {
-        res.status(500).json({
+        return res.status(500).json({
             message: err.message
         });
     }

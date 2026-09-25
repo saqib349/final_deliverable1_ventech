@@ -5,12 +5,12 @@ import { hashigPassword } from "../util/hashing.js";
 export async function getUsers(req,res){
     try{
         const users=await User.find({})
-        res.json({
+        return res.json({
             data:users
         })
     }
     catch(err){
-        res.status(500).json({
+        return res.status(500).json({
             message:err.message
         })
     }
@@ -43,16 +43,16 @@ export async function deleteUser(req,res){
         const _id=req.params.id
         const user =await  User.findByIdAndDelete(_id)
         if (!user){
-            res.status(404).json({
+            return res.status(404).json({
                 message:"user not found"
             })
         }
-        res.json({
+        return res.json({
             data:user
         })
     }   
     catch(err){
-        res.status(400).json({
+        return res.status(400).json({
             message:err.message
         })
     }
@@ -71,16 +71,16 @@ export async function updateUser(req,res){
         {returnDocument:"after"}
     )
         if (!user){
-            res.status(404).json({
+            return res.status(404).json({
                 message:"user not found"
             })
         }
-        res.json({
+       return  res.json({
             data:user
         })
     }   
     catch(err){
-        res.status(400).json({
+        return res.status(400).json({
             message:err.message
         })
     }
@@ -97,12 +97,12 @@ export async function addUser(req,res){
             password:hashedPassword,
             role
         })
-        res.status(201).json({
+        return res.status(201).json({
             data:user
         })
     }   
     catch(err){
-        res.status(400).json({
+        return res.status(400).json({
             message:err.message
         })
     }
