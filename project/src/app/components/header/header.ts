@@ -3,6 +3,7 @@ import { Router, RouterLink } from "@angular/router";
 import { FormsModule, ɵInternalFormsSharedModule } from "@angular/forms";
 import { SearchService } from '../../services/search-service';
 import { AuthService } from '../../services/auth-service';
+import { single } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class Header {
   searchService=inject(SearchService)
   authService=inject(AuthService)
   router=inject(Router)
+  loading=signal(false)
   
 
   searching(value:string){
@@ -27,7 +29,9 @@ export class Header {
     return this.authService.username()
   })
   logout(){
+    this.loading.set(true)
     this.authService.logoutUser().subscribe(()=>{
+        this.loading.set(false)
         this.router.navigate(['/login'])
     })
   }

@@ -14,7 +14,7 @@ export async function generateTodo(req, res) {
         try {
             rawResponse = await generateTodoFromPrompt(prompt.trim());
         } catch (err) {
-            console.error("AI Service Error:", err.message);
+            console.error("AI Service Error: ",err.message);
             return res.status(500).json({
                 message: "Failed to generate todo from AI service. Please check AI API configuration."
             });

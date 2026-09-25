@@ -81,7 +81,7 @@
           </div>
 
           <!-- Logout -->
-          <button class="btn btn-outline-danger" (click)="logout()">
+          <button class="btn btn-outline-danger" (click)="logout()" [disabled]="loading()">
             Logout
           </button>
 
