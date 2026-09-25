@@ -100,7 +100,7 @@ export class Signup {
 
       error: (err) => {
         this.loading.set(false)
-        this.errorMessage = err.error.message;
+        this.errorMessage.set(err.error.message);
       }
     });
   }
