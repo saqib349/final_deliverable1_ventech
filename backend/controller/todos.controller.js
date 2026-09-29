@@ -1,6 +1,6 @@
 import Todo from "../models/todos.model.js";
 
-export async function addTodo(req, res) {
+export async function addTodo(req, res,next) {
     try {
         const userId = req.user._id
         console.log(userId)
@@ -20,14 +20,12 @@ export async function addTodo(req, res) {
 
     }
     catch (err) {
-        res.status(400).json({
-            message: err.message
-        })
+        next(err)
     }
 
 }
 
-export async function deleteTodo(req, res) {
+export async function deleteTodo(req, res,next) {
     try {
         const _id = req.params.id
         console.log(_id)
@@ -43,14 +41,12 @@ export async function deleteTodo(req, res) {
         })
     }
     catch (err) {
-        return res.status(500).json({
-            message: err.message
-        })
+        next(err)
     }
 
 }
 
-export async function updateTodo(req, res) {
+export async function updateTodo(req, res,next) {
     try {
         const { title, description, priority, dueDate, completed } = req.body;
         const _id = req.params.id;
@@ -79,9 +75,7 @@ export async function updateTodo(req, res) {
         });
     }
     catch (err) {
-        return res.status(500).json({
-            message: err.message
-        });
+       next(err)
     }
 }
 
@@ -100,7 +94,7 @@ export async function updateTodo(req, res) {
 //     }
 // }
 
-export async function getTodos(req, res) {
+export async function getTodos(req, res,next) {
     try {
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 5;
@@ -128,14 +122,12 @@ export async function getTodos(req, res) {
         });
 
     } catch (err) {
-        return res.status(500).json({
-            message: err.message
-        });
+        next(err)
     }
 }
 
 
-export async function searchTodo(req, res) {
+export async function searchTodo(req, res,next) {
     try {
         const searchTerm = req.query.searchTerm?.trim();
 
@@ -158,8 +150,6 @@ export async function searchTodo(req, res) {
         });
 
     } catch (err) {
-        return res.status(500).json({
-            message: err.message
-        });
+       next(err)
     }
 }

@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'
 import userRouter from './routes/user.router.js'
 import dotenv from "dotenv"
 import aiRouter from './routes/ai.router.js'
+import { errorHandler } from './middlewares/errorHandler.js'
 dotenv.config()
 
 const app = express()
@@ -41,7 +42,7 @@ app.use("/admin/users",authMiddleware,authorizationMiddleWare,userRouter)
 // app.get('/login',(req,res)=>{
 //     res.render("login")
 // })  
-
+app.use(errorHandler)
 
 await connectDB()
 export default app;

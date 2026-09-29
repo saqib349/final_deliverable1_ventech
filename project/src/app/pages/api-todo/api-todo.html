@@ -25,16 +25,11 @@
       }
 
       @if (successfullMessage()) {
-
       <div class="alert alert-success alert-dismissible fade show" role="alert">
-
         {{ successfullMessage() }}
-
         <button type="button" class="btn-close" aria-label="Close" (click)="successfullMessage.set('')">
         </button>
-
       </div>
-
       }
 
       @if (canRetry) {
@@ -42,7 +37,6 @@
       <button class="btn btn-primary m-3" (click)="loadTodos(currentPage(), limit())">
         Retry
       </button>
-
       }
 
       @else if (todos().length < 1) { <li class="list-group-item border-0 text-center py-5">

@@ -3,27 +3,31 @@ import { createToken } from "../util/session.js"
 import { comparePasswords, hashigPassword } from "../util/hashing.js"
 
 
-export async function signup(req, res) {
+export async function signup(req, res,next) {
     try {
         const { username, email, password } = req.body
+        const userExist= await User.findOne({email})
+        if (userExist){
+            return res.status(400).json({
+                message: "user exist already with this email"
+            })
+        }
         const hashedPassword = await hashigPassword(password)
         const result = await User.create({
             username,
             email,
             password: hashedPassword
         })
-        return res.status(201).json({
-            message:"successfully signup"
+        res.status(201).json({
+            data: result
         })
     }
     catch (err) {
-        return res.status(400).json({
-            message: err.message
-        })
+        next(err)
     }
 
 }
-export async function login(req, res) {
+export async function login(req, res,next) {
     try {
 
         const { email, password } = req.body
@@ -55,9 +59,7 @@ export async function login(req, res) {
         })
     }
     catch (err) {
-        return res.status(500).json({
-            message: err.message
-        })
+        next(err)
     }
 
 }

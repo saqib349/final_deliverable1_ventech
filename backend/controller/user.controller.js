@@ -2,7 +2,7 @@ import User from "../models/User.model.js";
 import { hashigPassword } from "../util/hashing.js";
 
 
-export async function getUsers(req,res){
+export async function getUsers(req,res,next){
     try{
         const users=await User.find({})
         return res.json({
@@ -10,14 +10,12 @@ export async function getUsers(req,res){
         })
     }
     catch(err){
-        return res.status(500).json({
-            message:err.message
-        })
+        next(err)
     }
     
 }
 
-export async function getUserById(req,res){
+export async function getUserById(req,res,next){
     try{
         const _id=req.params.id
         const user=await User.findById(_id)
@@ -31,14 +29,12 @@ export async function getUserById(req,res){
         })
     }
     catch(err){
-        return res.status(400).json({
-            message:err.message
-        })
+        next(err)
     }
 
 
 }
-export async function deleteUser(req,res){
+export async function deleteUser(req,res,next){
     try{
         const _id=req.params.id
         const user =await  User.findByIdAndDelete(_id)
@@ -52,14 +48,12 @@ export async function deleteUser(req,res){
         })
     }   
     catch(err){
-        return res.status(400).json({
-            message:err.message
-        })
+        next(err)
     }
 
 }
 
-export async function updateUser(req,res){
+export async function updateUser(req,res,next){
     try{
         const _id=req.params.id
         const {username,email,role}=req.body 
@@ -80,14 +74,12 @@ export async function updateUser(req,res){
         })
     }   
     catch(err){
-        return res.status(400).json({
-            message:err.message
-        })
+        next(err)
     }
 
 }
 
-export async function addUser(req,res){
+export async function addUser(req,res,next){
     try{
         const {username,email,password,role}=req.body
         const hashedPassword=await hashigPassword(password)
@@ -102,9 +94,7 @@ export async function addUser(req,res){
         })
     }   
     catch(err){
-        return res.status(400).json({
-            message:err.message
-        })
+        next(err)
     }
 
 }
