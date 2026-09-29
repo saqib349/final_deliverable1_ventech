@@ -47,7 +47,40 @@ Rules:
             return response.text;
 
         } catch (err) {
-            console.error("Gemini API Error:", err);
+            console.error(
+                "Primary Gemini model failed:",
+                err?.status,
+                err?.message
+            );
+            if (err?.status === 503) {
+
+                console.log(
+                    "Primary model unavailable. Trying fallback model: gemini-3.5-flash-lite"
+                );
+
+                try {
+                    const response = await ai.models.generateContent({
+                        model: "gemini-3.5-flash-lite",
+                        contents: prompt,
+                        config: {
+                            systemInstruction,
+                            responseMimeType: "application/json"
+                        }
+                    });
+
+                    return response.text;
+
+                } catch (fallbackErr) {
+
+                    console.error(
+                        "Fallback Gemini model failed:",
+                        fallbackErr?.status,
+                        fallbackErr?.message
+                    );
+
+                    throw fallbackErr;
+                }
+            }
             throw err;
         }
     } else if (openAiKey) {
