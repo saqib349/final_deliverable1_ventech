@@ -1,6 +1,7 @@
 import User from "../models/User.model.js"
 import { createToken } from "../util/session.js"
 import { comparePasswords, hashigPassword } from "../util/hashing.js"
+import { sendEmail } from "../services/email.service.js"
 
 
 export async function signup(req, res,next) {
@@ -18,6 +19,7 @@ export async function signup(req, res,next) {
             email,
             password: hashedPassword
         })
+        await sendEmail(email, username)
         res.status(201).json({
             data: result
         })
