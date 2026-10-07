@@ -1,0 +1,110 @@
+<div class="otp-page">
+
+
+<div class="otp-card">
+
+    <!-- Icon -->
+    <div class="otp-icon">
+        <i class="bi bi-shield-lock"></i>
+    </div>
+
+    <!-- Heading -->
+    <h2 class="otp-title">Verify Your Login</h2>
+
+    <p class="otp-description">
+        We've sent a 6-digit verification code to your email.
+        Enter the code below to continue.
+    </p>
+
+    <!-- Timer -->
+    <div class="otp-timer" [class.expired]="timeLeft() === 0">
+
+        <i class="bi bi-clock"></i>
+
+        @if (timeLeft() > 0) {
+            <span>
+                Code expires in
+                <strong>{{ formattedTime }}</strong>
+            </span>
+        }
+
+        @if (timeLeft() === 0) {
+            <span>
+                OTP has expired
+            </span>
+        }
+
+    </div>
+
+
+    <!-- API Error -->
+    @if (errorMessage()) {
+        <div class="otp-error">
+            <i class="bi bi-exclamation-circle"></i>
+
+            <span>
+                {{ errorMessage() }}
+            </span>
+        </div>
+    }
+
+
+    <!-- OTP Input -->
+    <div class="otp-input-group">
+
+        <label for="otp">
+            Verification Code
+        </label>
+
+        <input
+            id="otp"
+            type="text"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="one-time-code"
+            placeholder="Enter 6-digit code"
+            [(ngModel)]="otp"
+            [disabled]="timeLeft() === 0"
+        />
+
+    </div>
+
+
+    <!-- Verify Button -->
+    <button
+        type="button"
+        class="verify-btn"
+        (click)="verifyOtp()"
+        [disabled]="otp.length !== 6 || timeLeft() === 0"
+    >
+        <i class="bi bi-check-circle me-2"></i>
+        Verify OTP
+    </button>
+
+
+    <!-- Expired Message -->
+    @if (timeLeft() === 0) {
+
+        <p class="expired-message">
+            Your verification code has expired.
+            Please request a new OTP.
+        </p>
+
+    }
+
+
+    <!-- Security text -->
+    <div class="security-note">
+
+        <i class="bi bi-shield-check"></i>
+
+        <span>
+            For your security, this code can only be used once.
+        </span>
+
+    </div>
+
+</div>
+
+
+</div>

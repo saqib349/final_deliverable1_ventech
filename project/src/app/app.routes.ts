@@ -11,6 +11,7 @@ import { NotFound } from './components/not-found/not-found';
 import { About } from './pages/about/about';
 import { CreateTodo } from './pages/create-todo/create-todo';
 import { Faq } from './pages/faq/faq';
+import { VerifyOtp } from './pages/verify-otp/verify-otp';
 
 export const routes: Routes = [
     {
@@ -52,6 +53,10 @@ export const routes: Routes = [
     {
         path: "signup",
         component: Signup
+    }, 
+    {
+        path: 'verify-otp/:userId',
+        component: VerifyOtp
     },
     {
         path: 'admin/user/:id',

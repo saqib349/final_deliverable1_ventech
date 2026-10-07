@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, Service, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, of, tap } from 'rxjs';
 @Injectable({
     providedIn: 'root'
@@ -9,6 +10,7 @@ export class AuthService {
     isAuthenticated = signal(false)
     username=signal("")
     role=signal("user")
+    router = inject(Router)
 
     checkAuth() {
         return this.http.get<{data:User}>(
@@ -40,6 +42,16 @@ export class AuthService {
         return this.http.post("https://final-deliverable1-ventech-o7q6.vercel.app/auth/signup", user)
     }
     loginUser(user: Omit<User, "username" | "role">) {
-        return this.http.post<{ data: User }>("https://final-deliverable1-ventech-o7q6.vercel.app/auth/login", user)
+        return this.http.post<loginResponse>("https://final-deliverable1-ventech-o7q6.vercel.app/auth/login", user)
+    }
+    verifyOtp(userId: string, otp: string) {
+        return this.http.post<{data : User}>(`https://final-deliverable1-ventech-o7q6.vercel.app/auth/verify-otp/${userId}`, { otp }).pipe(
+            tap((result) => {
+                this.isAuthenticated.set(true);
+                this.username.set(result.data.username) 
+                this.role.set(result.data.role)  
+                this.router.navigate(['/']);
+            })
+        )
     }
 } 

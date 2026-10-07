@@ -13,3 +13,8 @@ type Admin_users = {
     password:string,
     role:string
 }
+
+interface loginResponse {
+    message: string,
+    userId: string
+}

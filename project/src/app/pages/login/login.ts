@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { catchError, EMPTY, exhaustMap, Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IdleTimeCheck } from '../../services/idle-time-check';
+
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,6 @@ export class Login {
   authService = inject(AuthService)
   showPassword=signal(false)
   private clickLogin$ = new Subject<void>()
- idleTimeCheck=inject(IdleTimeCheck)
   constructor() {
   this.clickLogin$
     .pipe(
@@ -40,11 +39,7 @@ export class Login {
     )
     .subscribe({
       next: (result) => {
-        this.idleTimeCheck.startWatching()
-        this.authService.isAuthenticated.set(true);
-        this.authService.username.set(result.data.username);
-        this.authService.role.set(result.data.role);
-        this.router.navigate(['/']);
+        this.router.navigate([`/verify-otp/${result.userId}`]);
       }
     });
 }
