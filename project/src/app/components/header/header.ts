@@ -4,35 +4,41 @@ import { FormsModule, ɵInternalFormsSharedModule } from "@angular/forms";
 import { SearchService } from '../../services/search-service';
 import { AuthService } from '../../services/auth-service';
 import { single } from 'rxjs';
+import { IdleTimeCheck } from '../../services/idle-time-check';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, ɵInternalFormsSharedModule,FormsModule],
+  imports: [RouterLink, ɵInternalFormsSharedModule, FormsModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
-  searchService=inject(SearchService)
-  authService=inject(AuthService)
-  router=inject(Router)
-  loading=signal(false)
-  
+  searchService = inject(SearchService)
+  authService = inject(AuthService)
+  router = inject(Router)
+  loading = signal(false)
+  idleTimeCheck= inject(IdleTimeCheck)
 
-  searching(value:string){
+
+  searching(value: string) {
     this.searchService.searchTerm.set(value)
   }
-  
-  isAuthenticated=computed(()=>{
+
+  isAuthenticated = computed(() => {
     return this.authService.isAuthenticated()
   })
-  username=computed(()=>{
+  username = computed(() => {
     return this.authService.username()
   })
-  logout(){
+  logout() {
     this.loading.set(true)
-    this.authService.logoutUser().subscribe(()=>{
-        this.loading.set(false)
-        this.router.navigate(['/login'])
+    this.authService.logoutUser().subscribe(() => {
+      this.loading.set(false)
+      this.idleTimeCheck.stopWatching()
+      this.router.navigate(['/login'])
     })
+  }
+  cancelLogout(){
+    this.idleTimeCheck.showPopUp.set(false)
   }
 }

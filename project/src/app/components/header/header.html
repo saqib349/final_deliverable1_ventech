@@ -94,3 +94,44 @@
     </div>
   </div>
 </nav>
+
+@if (this.idleTimeCheck.showPopUp()) {
+  <div class="idle-modal-backdrop">
+
+    <div class="idle-modal">
+
+      <div class="idle-modal-icon">
+        ⏱
+      </div>
+
+      <h5 class="idle-modal-title">
+        Are you still there?
+      </h5>
+
+      <p class="idle-modal-text">
+        You have been inactive for a while. Do you want to stay logged in
+        or logout?
+      </p>
+
+      <div class="idle-modal-actions">
+
+        <button
+          type="button"
+          class="btn btn-outline-secondary idle-cancel-btn"
+          (click)="cancelLogout()">
+          Stay Logged In
+        </button>
+
+        <button
+          type="button"
+          class="btn idle-logout-btn"
+          (click)="logout()">
+          Logout
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+}
