@@ -9,6 +9,6 @@ const authRouter= express.Router()
 authRouter.post('/signup',signup)
 authRouter.post('/login',login)
 authRouter.post('/logout',logout)
-authRouter.post('/verify-otp', verifyOtp)
+authRouter.post('/verify-otp/:userId', verifyOtp)
 
 export default authRouter
