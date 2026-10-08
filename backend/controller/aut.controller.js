@@ -68,7 +68,7 @@ export async function googleCallback(req, res, next) {
             secure: true,
             sameSite: 'none'
         });
-            res.redirect('https://final-deliverable1-ventech-q699idguw.vercel.app/dashboard');
+            res.redirect('https://final-deliverable1-ventech.vercel.app/dashboard');
     }
     catch (err) {
         next(err)
@@ -134,7 +134,7 @@ export async function facebookCallback(req, res,next) {
             secure: true,
             sameSite: 'none'
         });
-        res.redirect('https://final-deliverable1-ventech-q699idguw.vercel.app/dashboard');    
+        res.redirect('https://final-deliverable1-ventech.vercel.app/dashboard');    
 
     }
     catch (err) {
