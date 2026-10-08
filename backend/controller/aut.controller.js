@@ -3,6 +3,145 @@ import { createToken } from "../util/session.js"
 import { comparePasswords, hashigPassword } from "../util/hashing.js"
 import { sendEmail } from "../services/email.service.js"
 import crypto from "crypto"
+import { OAuth2Client } from "google-auth-library";
+
+const googleClient = new OAuth2Client(
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET,
+    process.env.GOOGLE_REDIRECT_URI
+);
+
+export function googleLogin(req, res) {
+    const googleAuthUrl = googleClient.generateAuthUrl({
+        access_type: "offline",
+        scope: ["openid", "email", "profile"],
+        prompt: "select_account"
+    });
+
+    res.redirect(googleAuthUrl);
+}
+
+export async function googleCallback(req, res, next) {
+    const { code } = req.query;
+    console.log("Google callback code:", code);
+    try {
+        if (!code) {
+            return res.status(400).json({ message: "Authorization code is missing" });
+        }
+        const { tokens } = await googleClient.getToken(code);
+         if (!tokens.id_token) {
+            return res.status(400).json({
+                message: "Google ID token not received"
+            });
+        }
+        const ticket = await googleClient.verifyIdToken({
+            idToken: tokens.id_token,
+            audience: process.env.CLIENT_ID
+        });
+        const payload = ticket.getPayload();
+        const { email, name, sub: googleId,email_verified } = payload;
+        if (!email_verified) {
+            return res.status(400).json({
+                message: "Google email is not verified"
+            });
+        }
+        let user = await User.findOne({ googleId });
+        if (!user) {
+            user = await User.findOne({ email });
+            if (user) {
+                user.googleId = googleId;
+                user.authProvider = 'google';
+                await user.save();
+            } else {
+                user = await User.create({
+                    username: name,
+                    email,
+                    googleId,
+                    authProvider: 'google'
+                });
+            }
+           
+        }
+         const token = createToken({ username:user.username, _id: user._id,role:user.role })
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none'
+        });
+            res.redirect('https://final-deliverable1-ventech-q699idguw.vercel.app/dashboard');
+    }
+    catch (err) {
+        next(err)
+    }
+
+}
+
+export function facebookLogin(req, res) {
+    const facebookAuthUrl =
+        `https://www.facebook.com/v23.0/dialog/oauth` +
+        `?client_id=${process.env.FACEBOOK_ID}` +
+        `&redirect_uri=${encodeURIComponent(
+            process.env.FACEBOOK_REDIRECT_URI
+        )}` +
+        `&scope=email,public_profile`;
+    res.redirect(facebookAuthUrl);
+}
+
+export async function facebookCallback(req, res,next) {
+    const { code } = req.query;
+    console.log("Facebook callback code:", code);
+    try {
+        if (!code) {
+            return res.status(400).json({ message: "Authorization code is missing" });
+        }
+        const tokenResponse = await fetch(
+            `https://graph.facebook.com/v23.0/oauth/access_token` +
+            `?client_id=${process.env.FACEBOOK_ID}` +
+            `&redirect_uri=${encodeURIComponent(process.env.FACEBOOK_REDIRECT_URI)}` +
+            `&client_secret=${process.env.FACEBOOK_SECRET}` +
+            `&code=${code}`
+        );
+        const tokenData = await tokenResponse.json();
+        if (!tokenData.access_token) {
+            return res.status(400).json({
+                message: "Facebook access token not received"
+            });
+        }
+        const userResponse = await fetch(
+            `https://graph.facebook.com/me?fields=id,name,email&access_token=${tokenData.access_token}`
+        );
+        const userData = await userResponse.json(); 
+        const { id: facebookId, name, email } = userData;
+        let user = await User.findOne({ facebookId });
+        if (!user) {
+            user = await User.findOne({ email });
+            if (user) {
+                user.facebookId = facebookId;
+                user.authProvider = 'facebook';
+                await user.save();
+            } else {
+                user = await User.create({
+                    username: name,
+                    email,
+                    facebookId,
+                    authProvider: 'facebook'
+                });
+            }
+        }
+        const token = createToken({ username:user.username, _id: user._id,role:user.role })
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none'
+        });
+        res.redirect('https://final-deliverable1-ventech-q699idguw.vercel.app/dashboard');    
+
+    }
+    catch (err) {
+        next(err)
+    }
+}
+
 
 
 export async function signup(req, res) {

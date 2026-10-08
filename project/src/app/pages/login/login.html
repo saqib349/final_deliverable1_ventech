@@ -113,7 +113,17 @@
         </button>
 
       </form>
+      <button type="button" (click)="authService.loginWithGoogle()"
+        class="btn btn-outline-dark btn-lg w-100 mt-3 d-flex align-items-center justify-content-center gap-2">
 
+        <img src="google-logo.svg" alt="Google" class="google-icon">
+
+        Continue with Google
+      </button>
+      <button type="button" (click)="authService.loginWithFacebook()" class="btn btn-outline-primary btn-lg w-100 mt-3">
+
+        Continue with Facebook
+      </button>
 
       @if (errorMessage()) {
         <div class="text-danger small mt-1">

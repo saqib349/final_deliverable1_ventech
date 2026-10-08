@@ -24,6 +24,11 @@ export const routes: Routes = [
         pathMatch : 'full'
     },
     {
+        path: "dashboard",
+        redirectTo : "",
+        pathMatch : 'full'
+    },
+    {
         path: "listTodo",
         component: ListTodo,
         canActivate: [authGuardGuard]

@@ -54,4 +54,10 @@ export class AuthService {
             })
         )
     }
+    loginWithGoogle() {
+    window.location.href = 'https://final-deliverable1-ventech-o7q6.vercel.app/auth/google';
+  }
+  loginWithFacebook(){
+    window.location.href = 'https://final-deliverable1-ventech-o7q6.vercel.app/auth/facebook';
+  }
 } 
