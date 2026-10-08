@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AuthService } from '../../services/auth-service';
 import { ActivatedRoute } from '@angular/router';
-import { IdleTimeCheck } from '../../services/idle-time-check';
 import { signal } from '@angular/core';
 
 @Component({
@@ -30,8 +29,6 @@ export class VerifyOtp implements OnDestroy {
   authService = inject(AuthService);
   route = inject(ActivatedRoute);
   errorMessage = signal("");
-  idleTimeCheck = inject(IdleTimeCheck);
-
   constructor() {
     this.startTimer();
   }
@@ -86,8 +83,6 @@ export class VerifyOtp implements OnDestroy {
       next: (result) => {
 
         this.stopTimer();
-
-        this.idleTimeCheck.startWatching();
 
         console.log(result);
 

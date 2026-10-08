@@ -3,6 +3,7 @@ import { AdminComponent } from "../components/admin-component/admin-component";
 import { UserService } from '../services/user-service';
 import { AuthService } from '../services/auth-service';
 import { RouterLink } from "@angular/router";
+import { IdleTimeCheck } from '../services/idle-time-check';
 
 @Component({
   selector: 'app-main',
@@ -11,9 +12,12 @@ import { RouterLink } from "@angular/router";
   styleUrl: './main.css',
 })
 export class Main {
-  
+  idleTimeCheck = inject(IdleTimeCheck)
   authService=inject(AuthService)
   authenticated=this.authService.isAuthenticated
+  constructor() {
+        this.idleTimeCheck.startWatching();
+  }
   isAdmin = computed(()=>{
     if (this.authService.role()==="admin"){
       return true
