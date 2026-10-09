@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api-service';
 import { Todoslist } from '../../components/todoslist/todoslist';
 import { SearchService } from '../../services/search-service';
-import { AddTodo } from "../../components/add-todo/add-todo";
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import {
   catchError,
@@ -17,7 +16,7 @@ import {
 
 @Component({
   selector: 'app-api-todo',
-  imports: [Todoslist, AddTodo],
+  imports: [Todoslist],
   templateUrl: './api-todo.html',
   styleUrl: './api-todo.css',
 })

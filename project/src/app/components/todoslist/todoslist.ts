@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output,ChangeDetectionStrategy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
   imports: [DatePipe],
   templateUrl: './todoslist.html',
   styleUrl: './todoslist.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Todoslist {
   todo = input<todo>()

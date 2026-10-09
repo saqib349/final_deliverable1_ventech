@@ -9,12 +9,12 @@ const auther = nodemailer.createTransport({
   }
 }); 
 
-export const sendEmail = async (recipient,name,text) => {
+export const sendEmail = async (recipient,subject,text) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: recipient,
-    subject: 'Welcome!',
-    text: text || `Hello ${name}, welcome to our todo app!`
+    subject: subject || 'Welcome!',
+    text: text || 'Thank you for signing up. We are excited to have you on board!'
   };
 
   try {
