@@ -20,9 +20,9 @@ export class Header {
   idleTimeCheck= inject(IdleTimeCheck)
 
 
-  searching(value: string) {
-    this.searchService.searchTerm.set(value)
-  }
+  // searching(value: string) {
+  //   this.searchService.searchTerm.set(value)
+  // }
 
   isAuthenticated = computed(() => {
     return this.authService.isAuthenticated()

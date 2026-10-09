@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
 import { ListService } from '../../services/list-service';
 import { Todoslist } from '../../components/todoslist/todoslist';
 import { NgTemplateOutlet } from '@angular/common';
@@ -11,7 +11,7 @@ import { SearchService } from '../../services/search-service';
   templateUrl: './list-todo.html',
   styleUrl: './list-todo.css',
 })
-export class ListTodo implements OnInit {
+export class ListTodo implements OnInit,OnDestroy {
   
   searchService=inject(SearchService)
   listService= inject(ListService)
@@ -20,6 +20,9 @@ export class ListTodo implements OnInit {
 
   constructor(){
     console.log(this.todos());
+  }
+  ngOnDestroy(): void {
+    this.searchService.searchTerm.set("")
   }
   ngOnInit(): void {
     this.loading=true

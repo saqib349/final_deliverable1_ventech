@@ -50,7 +50,7 @@
 
         <!-- Search -->
         <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="width: 250px;"
-          (input)="searching($any($event.target).value)">
+          [(ngModel)]="searchService.searchTerm">
 
         <!-- Login -->
         @if(!isAuthenticated()){
