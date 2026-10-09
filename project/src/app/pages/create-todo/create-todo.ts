@@ -1,8 +1,9 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ApiService } from '../../services/api-service';
 import { AiTodoAssistant } from '../../components/ai-todo-assistant/ai-todo-assistant';
 import { AddTodo } from '../../components/add-todo/add-todo';
+import { SearchService } from '../../services/search-service';
 
 @Component({
   selector: 'app-create-todo',
@@ -10,7 +11,11 @@ import { AddTodo } from '../../components/add-todo/add-todo';
   templateUrl: './create-todo.html',
   styleUrl: './create-todo.css',
 })
-export class CreateTodo {
+export class CreateTodo implements OnDestroy {
+  ngOnDestroy(): void {
+    this.searchService.searchTerm.set('');
+  }
+  searchService = inject(SearchService)
   apiService = inject(ApiService)
   errorMessage = signal('')
   successfullMessage = signal('')

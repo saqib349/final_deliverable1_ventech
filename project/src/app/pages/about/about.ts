@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SearchService } from '../../services/search-service';
 
 @Component({
   selector: 'app-about',
@@ -7,4 +8,9 @@ import { RouterLink } from '@angular/router';
   templateUrl: './about.html',
   styleUrl: './about.css',
 })
-export class About {}
+export class About implements OnDestroy {
+  searchService = inject(SearchService);
+  ngOnDestroy(): void {
+    this.searchService.searchTerm.set('')
+  }
+}
