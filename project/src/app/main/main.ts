@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { AdminComponent } from "../components/admin-component/admin-component";
 import { UserService } from '../services/user-service';
 import { AuthService } from '../services/auth-service';
@@ -11,22 +11,37 @@ import { IdleTimeCheck } from '../services/idle-time-check';
   templateUrl: './main.html',
   styleUrl: './main.css',
 })
-export class Main {
-  idleTimeCheck = inject(IdleTimeCheck)
-  authService=inject(AuthService)
-  authenticated=this.authService.isAuthenticated
-  constructor() {
-        this.idleTimeCheck.startWatching();
+export class Main implements OnInit {
+  ngOnInit(): void {
+    console.log(
+      'Authenticated when Main initializes:',
+      this.authService.isAuthenticated()
+    );
+
+    if (this.authService.isAuthenticated()) {
+      console.log('Starting idle watcher');
+      this.idleTimeCheck.startWatching();
+    } else {
+      console.log('User is not authenticated');
+    }
   }
-  isAdmin = computed(()=>{
-    if (this.authService.role()==="admin"){
+
+  idleTimeCheck = inject(IdleTimeCheck)
+  authService = inject(AuthService)
+  authenticated = this.authService.isAuthenticated
+
+  // constructor() {
+  //   this.idleTimeCheck.startWatching();
+  // }
+  isAdmin = computed(() => {
+    if (this.authService.role() === "admin") {
       return true
     }
-    else{
+    else {
       return false
     }
   })
-  username=computed(()=>{
+  username = computed(() => {
     return this.authService.username()
   })
 }
