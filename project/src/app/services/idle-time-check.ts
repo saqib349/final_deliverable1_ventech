@@ -47,8 +47,10 @@ export class IdleTimeCheck {
   }
   stopWatching(){
     this.watch?.unsubscribe()
+    this.watch=undefined
     this.showPopUp.set(false)
     if (this.timer){
+      this.timer=undefined
         clearTimeout(this.timer)
     }
   }
